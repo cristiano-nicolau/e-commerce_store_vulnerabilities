@@ -1,0 +1,11 @@
+flask-sqlalchemy
+flask-cors
+Flask-Bcrypt
+Flask-Login
+PyJWT
+bleach
+werkzeug~=2.2.0
+markupsafe==2.1.1
+SQLAlchemy==1.4.23
+Flask==2.2.0
+jinja2~=3.0.3

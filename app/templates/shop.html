@@ -1,0 +1,546 @@
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="../images/favicon.png">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+		<!-- Bootstrap CSS -->
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+		<link href="../css/tiny-slider.css" rel="stylesheet">
+		<link href="../css/style.css" rel="stylesheet">
+		<link href="../css/shop.css" rel="stylesheet">
+		<title>DETI - Departamento de Electrónica, Telecomunicações e Informática </title>
+	</head>
+
+	<style>
+		@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+		body{
+		background: #f2f2f2;
+		font-family: 'Open Sans', sans-serif;
+		}
+
+		.search {
+		width: 100%;
+		position: relative;
+		display: flex;
+		margin-top: 20px;
+		margin-left: 300px;
+		}
+
+		.searchTerm {
+		width: 50%;
+		border: 3px solid #ffffff;
+		border-right: none;
+		padding: 10px;
+		height: 36px;
+		border-radius: 5px 0 0 5px;
+		border-color: #000000;
+		outline: none;
+		color: #000000;
+		}
+
+		.searchTerm:focus{
+		color: #585555;
+		}
+
+		.searchButton {
+		width: 40px;
+		height: 36px;
+		border: 1px solid #000000;
+		background: #000000;
+		text-align: center;
+		color: #fff;
+		border-radius: 0 5px 5px 0;
+		cursor: pointer;
+		font-size: 20px;
+		}
+
+		/*Resize the wrap to see the search bar change!*/
+		.wrap{
+		width: 30%;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		}
+
+		/* Style for the filter container */
+		.filter-section {
+			margin-right: 20px; /* Spacing between filter sections */
+			display: inline-block; /* Display filters in a row */
+		}
+	
+		/* Style for labels */
+		.filter-section label {
+			font-weight: bold;
+			display: block;
+			margin-bottom: 5px;
+			margin-left: 350px;
+			margin-top: 30px;
+			font-size: 20px;
+		}
+	
+		/* Style for input fields and select dropdown */
+		.filter-section input,
+		.filter-section select {
+			width: 150px; /* Adjust the width as needed */
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			margin-left: 350px;
+			margin-top: 10px;
+		}
+	
+		/* Style for the "Apply Filters" button */
+		#applyFilters {
+			background-color: #000000;
+			color: #fff;
+			padding: 8px 15px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			
+		}
+
+		.range_container {
+			display: flex;
+			flex-direction: column;
+			width: 30%;
+			margin-top: 20px;
+			margin-bottom: 40px;
+		}
+
+		.sliders_control {
+			position: relative;
+			min-height: 10px;
+		}
+
+		.sliders_control input{
+			left: 30px;
+		}
+
+		.form_control {
+			position: relative;
+			display: flex;
+			justify-content: space-between;
+			font-size: 20px;
+			color: #ffffff;
+			left: 30px;
+		}
+
+		.form_control_container input{
+			height: 20.6px;
+			background-color: #f5efef;
+			border-radius: 2px;
+		}
+
+		input[type=range]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			pointer-events: all;
+			width: 24px;
+			height: 24px;
+			background-color: #fff;
+			border-radius: 50%;
+			box-shadow: 0 0 0 1px #C6C6C6;
+			cursor: pointer;
+		}
+
+		input[type=range]::-moz-range-thumb {
+			-webkit-appearance: none;
+			pointer-events: all;
+			width: 24px;
+			height: 24px;
+			background-color: #fff;
+			border-radius: 50%;
+			box-shadow: 0 0 0 1px #C6C6C6;
+			cursor: pointer;  
+		}
+
+		input[type=range]::-webkit-slider-thumb:hover {
+			background: #f7f7f7;
+		}
+
+		input[type=range]::-webkit-slider-thumb:active {
+			box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+			-webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+		}
+
+		input[type="number"] {
+			color: #333131;
+			width: 55px;
+			height: 30px;
+			font-size: 20px;
+			border: none;
+		}
+
+		input[type=number]::-webkit-inner-spin-button, 
+		input[type=number]::-webkit-outer-spin-button {  
+			opacity: 1;
+		}
+
+		input[type="range"] {
+			-webkit-appearance: none; 
+			appearance: none;
+			height: 2px;
+			width: 100%;
+			position: absolute;
+			background-color: #C6C6C6;
+			pointer-events: none;
+		}
+
+		#fromSlider, #fromSlider2 {
+			height: 0;
+			z-index: 1;
+		}
+	</style>
+	
+
+	<body>
+
+		<nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+			<div class="container">
+				<a class="navbar-brand" href="index.html">DETI Store<span>.</span></a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+		
+				<div class="collapse navbar-collapse" id="navbarsFurni">
+					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+						<li class="nav-item">
+							<a class="nav-link" href="index.html">Home</a>
+						</li>
+						<li><a class="nav-link" href="shop.html">Shop</a></li>
+						<li><a class="nav-link" href="about.html">About us</a></li>
+					</ul>
+		
+					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+						<li id="Admin" class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<img src="../images/user_copy.svg">
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="userDropdown">
+								<li><a class="dropdown-item" href="userdashboard.html">Account Details</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li id="logout"><a class="dropdown-item text-danger" >Logout</a></li>
+							</ul>
+						</li>
+						<li id="User" class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<img src="../images/user_copy.svg">
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="userDropdown">
+								<li><a class="dropdown-item" href="userdashboard.html">Account Details</a></li>
+								<li><a class="dropdown-item" href="orders.html">Orders</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li id="logout-id"><a class="dropdown-item text-danger" >Logout</a></li>
+							</ul>
+						</li>
+						<li id="NotAuthenticated"><a class="nav-link" href="reg_log.html"><img src="../images/user.svg"></a></li>
+						<li id="Cart"><a class="nav-link" href="cart.html"><img src="../images/cart.svg"></a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!-- End Header/Navigation -->
+
+		<!-- Start Hero Section -->
+			<div class="hero">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>Shop</h1>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div class="search">
+								<input type="text" class="searchTerm" id="searchTerm" placeholder="What are you looking for?">
+								<button type="submit" class="searchButton" onclick="filter()">
+									<i class="fa fa-search"></i>
+								</button>
+							</div>
+						</div>
+					</div>	
+					<div class="row justify-content-between">
+						<div class="col-lg-5 range_container">
+							<h4 id="Preco" style="color: #ffffff;">Preço:</h4>
+							<div class="sliders_control">
+								<input id="fromSlider" onclick="filter()" type="range" value="3" min="0" max="299"/>
+								<input id="toSlider" onclick="filter()" type="range" value="290" min="0" max="300"/>
+							</div>
+							<div class="form_control">
+								<div class="form_control_container">
+									<div class="form_control_container__time">Min</div>
+									<input class="form_control_container__time__input" onclick="filter()" type="number" id="fromInput" value="3" min="0" max="299"/>
+								</div>
+								<div class="form_control_container">
+									<div class="form_control_container__time">Max</div>
+									<input class="form_control_container__time__input" onclick="filter()" type="number" id="toInput" value="290" min="0" max="300"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-7 filter-section">
+							<label for="category" style="color: #ffffff;">Category:</label>
+							<select id="category">
+								<option value="">Select a category</option>
+							</select>
+							<button id="applyFilters" onclick="filter()">Apply Filters</button>
+						</div>						
+					</div>								
+				</div>
+			</div>
+		<!-- End Hero Section -->
+
+		<div class="untree_co-section product-section before-footer-section">
+			<div class="container">
+				<div class="row" id="product-list">
+					<!-- Products will be rendered here -->
+				</div>
+			</div>
+		</div>
+
+
+
+		<!-- Start Footer Section -->
+		<footer class="footer-section">
+			<div class="container relative">
+
+
+				<div class="row g-5 mb-5">
+					<div class="col-lg-4">
+						<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">DETI Store<span>.</span></a></div>
+						<p class="mb-4">DETI, or the Department of Electronics, Telecommunications, and Informatics, is a pioneering academic department at our university. Known for its commitment to excellence, DETI offers cutting-edge programs, research opportunities, and a vibrant community where innovation thrives.</p>
+
+						<ul class="list-unstyled custom-social">
+							<li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+							<li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+							<li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+							<li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+						</ul>
+					</div>
+
+					<div class="col-lg-8">
+						<div class="row links-wrap">
+							<div class="col-6 col-sm-6 col-md-3">
+								<ul class="list-unstyled">
+									<li><a href="#">About us</a></li>
+									<li><a href="#">Services</a></li>
+									<li><a href="reviews.html">Reviews</a></li>
+									<li><a href="#">Contact us</a></li>
+								</ul>
+							</div>
+
+							<div class="col-6 col-sm-6 col-md-3">
+								<ul class="list-unstyled">
+									<li><a href="#">Support</a></li>
+									<li><a href="#">Knowledge base</a></li>
+									<li><a href="#">Live chat</a></li>
+								</ul>
+							</div>
+
+							<div class="col-6 col-sm-6 col-md-3">
+								<ul class="list-unstyled">
+									<li><a href="#">Jobs</a></li>
+									<li><a href="#">Our team</a></li>
+									<li><a href="#">Leadership</a></li>
+									<li><a href="#">Privacy Policy</a></li>
+								</ul>
+							</div>
+
+							
+						</div>
+					</div>
+
+				</div>
+
+				<div class="border-top copyright">
+					<div class="row pt-4">
+						<div class="col-lg-6">
+							<p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a>  <!-- License information: https://untree.co/license/ -->
+            </p>
+						</div>
+
+						<div class="col-lg-6 text-center text-lg-end">
+							<ul class="list-unstyled d-inline-flex ms-auto">
+								<li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+								<li><a href="#">Privacy Policy</a></li>
+							</ul>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</footer>
+		<!-- End Footer Section -->	
+
+		<script>
+			const logoutButton = document.getElementById("logout-id");
+			logoutButton.addEventListener("click", function() {
+				localStorage.removeItem('token');
+				localStorage.removeItem('user_id');
+
+				window.location.href = "index.html";})
+			fetch('http://127.0.0.1:5000/product') // Ajuste o URL de acordo com o servidor Flask
+			  .then(response => response.json())
+			  .then(data => {
+				const productContainer = document.getElementById('product-list');
+				data.products.forEach(product => {
+					console.log(product.id)
+				  const productItem = document.createElement('div');
+				  productItem.className = 'col-12 col-md-4 col-lg-3 mb-5';
+				  productItem.innerHTML = `
+					<a class="product-item" data-product-id="${product.id}" data-product-categories="${product.category}">
+					  <img src="${product.photo}" class="img-fluid product-thumbnail">
+					  <h3 class="product-title">${product.name}</h3>
+					  <strong class="product-price">$${product.price}</strong>		
+					  <span class="icon-cross">
+								<img src=${"../images/cross.svg"} class="img-fluid">
+							</span>
+					</a>
+				  `;
+				  productContainer.appendChild(productItem);
+				});
+			  });
+			  fetch('http://127.0.0.1:5000/category') // Faça a solicitação à rota '/categories'
+				.then(response => response.json())
+				.then(data => {
+					const categorySelect = document.getElementById('category');
+					data.category.forEach(category => {
+						const option = document.createElement('option');
+						option.value = category.id;
+						option.text = category.name;
+						categorySelect.appendChild(option);
+					});
+				});
+			// Adicione um manipulador de eventos de clique ao botão "Aplicar filtros"
+			document.getElementById('applyFilters').addEventListener('click', function() {
+				filter();
+			});
+
+			//const productCategories = e.target.dataset.productCategories;  para veres as categorias de cada produto
+			
+			// Adicione um manipulador de eventos de clique a cada item de produto
+			document.addEventListener('click', function(e) {
+			const productItem = e.target.closest('.product-item');
+			if (productItem) {
+				const productId = productItem.getAttribute('data-product-id');
+				const productCategories = productItem.getAttribute('data-product-categories');
+				window.location.href = `product_details.html?id=${productId}`;
+			}
+			});
+
+		function filter() {
+			// Get selected category and price range values
+			const selectedCategory = document.getElementById('category').value;
+			const minPrice = parseFloat(document.getElementById('fromInput').value);
+			const maxPrice = parseFloat(document.getElementById('toInput').value);
+			const searchTerm = document.getElementById('searchTerm').value.toLowerCase(); // Convert to lowercase for case-insensitive search
+
+			// Define a mapping of category IDs to category names
+			const categoryMap = {
+					'1': 'Clothes',
+					'2': 'Drinkware',
+					'3': 'Computer Accessories',
+					'4': 'Clothing Accessories',
+					'5': 'Decor',
+					'6': 'Tech Accessories',
+					'7': 'Promotional Items',
+			};
+
+			// Get all product items
+			const productItems = document.querySelectorAll('.product-item');
+
+			// Loop through each product item and apply the filter
+			productItems.forEach((productItem) => {
+				const productId = productItem.getAttribute('data-product-id');
+				const productCategories = productItem.getAttribute('data-product-categories');
+				const productPrice = parseFloat(productItem.querySelector('.product-price').textContent.replace('$', ''));
+				const productName = productItem.querySelector('.product-title').textContent.toLowerCase(); // Convert to lowercase for case-insensitive search	
+
+				// Map the selected category ID to its name
+				const selectedCategoryName = categoryMap[selectedCategory];
+
+				// Check if the selected category matches the product's category
+				const categoryFilter = selectedCategory === '' || productCategories.includes(selectedCategoryName);
+
+				// Check if the product price is within the selected price range
+				const priceFilter = productPrice >= minPrice && productPrice <= maxPrice;
+
+				// Check if the product name contains the search term
+				const searchFilter = productName.includes(searchTerm);
+
+				// Show the product if it matches the filters; hide it otherwise
+				if (categoryFilter && priceFilter && searchFilter) {
+				productItem.style.display = 'block';
+				} else {
+				productItem.style.display = 'none';
+				}
+			});
+		}
+
+			
+
+			function checkToken() {
+				const token = localStorage.getItem('token'); // Verifique o token armazenado no localStorage
+				var Admin = document.getElementById('Admin');
+				var User = document.getElementById('User');
+				var NotAuthenticated = document.getElementById('NotAuthenticated');
+				if (token) {
+					fetch('http://127.0.0.1:5000/user_info', {
+						method: 'GET',
+						headers: {
+						'Authorization': token 
+						}
+					})
+					.then(response => response.json())
+					.then(data => {
+					// Verifique se o usuário está autenticado e recupere o tipo de usuário
+					if (data.is_authenticated) {
+						if (data.user_type === 'admin') {
+							Admin.style.display = 'block';
+							User.style.display = 'none';
+							NotAuthenticated.style.display = 'none';
+						} else {
+							Admin.style.display = 'none';
+							User.style.display = 'block';
+							NotAuthenticated.style.display = 'none';
+						}
+					} else {
+						Admin.style.display = 'none';
+						User.style.display = 'none';
+						NotAuthenticated.style.display = 'block';
+					}
+					})
+					.catch(error => {
+					console.error('Erro ao buscar informações do usuário:', error);
+					});
+				} else {
+					Admin.style.display = 'none';
+					User.style.display = 'none';
+					NotAuthenticated.style.display = 'block';
+				}
+		}
+		checkToken();
+		  </script>
+		<script src="../js/bootstrap.bundle.min.js"></script>
+		<script src="../js/tiny-slider.js"></script>
+		<script src="../js/custom.js"></script>
+		<script src="../js/filters.js"></script>
+	</body>
+
+</html>

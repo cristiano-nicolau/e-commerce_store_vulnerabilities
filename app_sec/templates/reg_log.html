@@ -1,0 +1,345 @@
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="../images/favicon.png">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+		<!-- Bootstrap CSS -->
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+		<link href="../css/tiny-slider.css" rel="stylesheet">
+		<link href="../css/style.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+		<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+	</head>
+
+	<style>
+		@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;	
+			font-family: Raleway, sans-serif;
+		}
+
+		body {
+			background: linear-gradient(90deg, #c5f4d9, #3b5d50);		
+		}
+
+		.container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+		}
+
+		.screen {		
+			background: linear-gradient(90deg, #3b6756, #76a694);		
+			position: relative;	
+			height: 600px;
+			width: 360px;	
+			box-shadow: 0px 0px 24px #569659;
+		}
+
+		.screen__content {
+			z-index: 1;
+			position: relative;	
+			height: 100%;
+		}
+
+		.screen__background {		
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 0;
+			-webkit-clip-path: inset(0 0 0 0);
+			clip-path: inset(0 0 0 0);	
+		}
+
+		.screen__background__shape {
+			transform: rotate(45deg);
+			position: absolute;
+		}
+
+		.screen__background__shape1 {
+			height: 520px;
+			width: 520px;
+			background: #FFF;	
+			top: -50px;
+			right: 120px;	
+			border-radius: 0 72px 0 0;
+		}
+
+		.screen__background__shape2 {
+			height: 220px;
+			width: 220px;
+			background: #4c7c6a;	
+			top: -172px;
+			right: 0;	
+			border-radius: 32px;
+		}
+
+		.screen__background__shape3 {
+			height: 540px;
+			width: 190px;
+			background: linear-gradient(270deg, #4c7c6a	, #76a694);
+			top: -24px;
+			right: 0;	
+			border-radius: 32px;
+		}
+
+		.screen__background__shape4 {
+			height: 400px;
+			width: 200px;
+			background: #4c7c6a;	
+			top: 420px;
+			right: 50px;	
+			border-radius: 60px;
+		}
+
+		.login {
+			width: 320px;
+			padding: 30px;
+			padding-top: 156px;
+		}
+
+		.login__field {
+			padding: 20px 0px;	
+			position: relative;	
+		}
+
+		.login__icon {
+			position: absolute;
+			top: 30px;
+			color: #4c7c6a;
+		}
+
+		.login__input {
+			border: none;
+			border-bottom: 2px solid #D1D1D4;
+			background: none;
+			padding: 10px;
+			padding-left: 24px;
+			font-weight: 700;
+			width: 75%;
+			transition: .2s;
+		}
+
+		.login__input:active,
+		.login__input:focus,
+		.login__input:hover {
+			outline: none;
+			border-bottom-color: #4c7c6a;
+		}
+
+		.login__submit,
+		.register__submit {
+			background: #fff;
+			font-size: 14px;
+			margin-top: 20px;
+			padding: 16px 20px;
+			border-radius: 26px;
+			border: 1px solid #D4D3E8;
+			text-transform: uppercase;
+			font-weight: 700;
+			display: flex;
+			align-items: center;
+			width: 65%;
+			color: #4c7c6a;
+			box-shadow: 0px 2px 2px #4c7c6a;
+			cursor: pointer;
+			transition: .2s;
+		}
+		.feedback__message {
+    position: absolute;
+	
+    top: 0;
+	margin-top: 10px;
+    width: 80%;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.success-message {
+    background-color: #4CAF50;
+    color: #ffffff;
+}
+
+.error-message {
+    background-color: #f44336;
+    color: #ffffff;
+}
+
+		.login__submit:active,
+		.login__submit:focus,
+		.login__submit:hover {
+			border-color: #4c7c6a;
+			outline: none;
+		}
+
+		.register__submit:active,
+		.register__submit:focus,
+		.register__submit:hover {
+			border-color: #4c7c6a;
+			outline: none;
+		}
+
+		.back_website {
+			background: #ffffff;
+			font-size: 14px;
+			margin-top: 10px;
+			padding: 16px 20px;
+			border-radius: 26px;
+			border: 1px solid #e8d3d3;
+			text-transform: uppercase;
+			font-weight: 700;
+			display: flex;
+			align-items: center;
+			width: 40%;
+			color: #000000;
+			box-shadow: 0px 2px 2px #000000;
+			cursor: pointer;
+			transition: .2s;
+		}
+
+		.back_website:active,
+		.back_website:focus,
+		.back_website:hover {
+			border-color: #000000;
+			outline: none;
+		}
+
+		.button__icon {
+			font-size: 24px;
+			margin-left: auto;
+			color: #4c7c6a;
+		}
+
+		.button__icon2 {
+			font-size: 24px;
+			margin-left: auto;
+			color: #000000;
+		}
+
+	</style>
+
+	<body>
+		<div class="container">
+			<div class="screen">
+				<div class="screen__content">
+					<form class="login" id="login-form">
+						<div class="feedback__message success-message" id="login-success" style="display: none;">Login Successful</div>
+						<div class="feedback__message error-message" id="login-failure" style="display: none;">Login Failed</div>
+						
+						<div class="login__field">
+							<i class="login__icon fas fa-user"></i>
+							<input type="text" name="email" class="login__input" placeholder="Email">
+						</div>
+						<div class="login__field">
+							<i class="login__icon fas fa-lock"></i>
+							<input type="password" name="password" class="login__input" placeholder="Password">
+						</div>
+						<button class="button login__submit" id="login-button">
+							<a style="text-decoration: none;">
+								<span class="button__text">Log In Now</span>
+								<i class="button__icon fas fa-chevron-right"></i>
+							</a>
+						</button>
+						<button class="button register__submit">
+							<a style="text-decoration: none;" href="register.html">
+								<span class="button__text">Register Page</span>
+								<i class="button__icon fas fa-chevron-right"></i>
+							</a>
+						</button>	
+						<button class="button back_website">
+							<a style="text-decoration: none;" href="index.html">
+								<span class="button__text">Back</span>
+								<i class="button__icon2 fas fa-chevron-right"></i>
+							</a>
+						</button>				
+					</form>
+					
+				</div>
+				<div class="screen__background">
+					<span class="screen__background__shape screen__background__shape4"></span>
+					<span class="screen__background__shape screen__background__shape3"></span>		
+					<span class="screen__background__shape screen__background__shape2"></span>
+					<span class="screen__background__shape screen__background__shape1"></span>
+				</div>		
+			</div>
+		</div>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const loginForm = document.getElementById("login-form");
+				const loginButton = document.getElementById("login-button");
+				const loginSuccessMessage = document.getElementById("login-success");
+				const loginFailureMessage = document.getElementById("login-failure");
+			
+				// Lidar com o envio do formulário de login
+				loginForm.addEventListener("submit", function (e) {
+					e.preventDefault();
+					loginSuccessMessage.style.display = "none";
+					loginFailureMessage.style.display = "none";
+			
+					// Obtenha os valores do formulário
+					const email = loginForm.querySelector('input[name="email"]').value;
+					const password = loginForm.querySelector('input[name="password"]').value;
+			
+					// Faça uma solicitação POST para o servidor Flask (http://127.0.0.1:5000/reg_log)
+					fetch("http://127.0.0.1:5000/reg_log", {
+						method: "POST",
+						body: new URLSearchParams({ email, password }),
+						headers: {
+							"Content-Type": "application/x-www-form-urlencoded",
+						},
+					})
+						.then((response) => response.json())
+						.then((data) => {
+							if (data.isauthenticated) {
+								// Login bem-sucedido
+								loginSuccessMessage.style.display = "block";
+								// Armazene o token JWT no localStorage
+								localStorage.setItem("token", data.token);
+								localStorage.setItem("user_id", data.user_id);
+								// Redirecione o usuário para outra página (por exemplo, userdashboard.html)
+								// Redirecione o usuário com base no tipo
+								if (data.user_type === "admin") {
+										// Usuário é um administrador, redirecione para userdashboard.html
+										window.location.href = "admin.html";
+								} else {
+										// Usuário não é um administrador, redirecione para index.html
+										window.location.href = "index.html";
+									}							
+							} else {
+								// Login falhou
+								loginFailureMessage.style.display = "block";
+								
+							}
+						})
+						.catch((error) => {
+							console.error("Erro ao fazer login:", error);
+						});
+				});
+			});
+		</script>
+	</body>
+</html>
+
+
