@@ -52,7 +52,7 @@
         * **CWE-286** - directory with the vulnerable and secure demonstrations
         * **CWE-260** - directory with the vulnerable and secure demonstrations
     * **ASVS** - directory with the ASVS excel list
-        * [ASVS-Proj2.xlsx](/analysis/ASVS/ASVS-Proj2.xlsx)
+        * [ASVS-Proj2.xlsx](/analyses/ASVS/ASVS-Proj2.xlsx)
         * **images** - directory with the images used in the report
             * **#2.1.12** - directory for #2.1.12
             * **#2.1.6** - directory for #2.1.6
