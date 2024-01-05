@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Factor Authentication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Two-Factor Authentication</h1>
+</header>
+
+<main>
+    <p>Scan the QR code below with Google Authenticator:</p>
+    <div id="qrcode"></div>
+
+
+    <form id="login-form" method="post">
+        <label for="totp_code">Enter the 6-digit authentication code:</label>
+        <input type="text" id="totp_code" name="totp_code" required pattern="[0-9]{6}" title="Please enter a 6-digit code">
+
+
+        <input type="hidden" name="totpSecret" value="{{ totp_uri }}">
+
+        <button type="submit">Submit</button>
+    </form>
+</main>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" ></script>
+
+<script>
+    //qrcode 
+    var secretKey = localStorage.getItem('sc');
+    var id = localStorage.getItem('user_id');
+    var totpUri = 'otpauth://totp/DETIStore?secret=' + secretKey + '&issuer=SIO - DETIStore - ' + id + ' user';
+    var qrcodeContainer = document.getElementById('qrcode');
+    var qrcode = new QRCode(qrcodeContainer, {
+        text: totpUri,
+        width: 200,
+        height: 200
+    });
+    qrcodeContainer.style.display = 'flex';
+    qrcodeContainer.style.justifyContent = 'center';
+    qrcodeContainer.style.alignItems = 'center';
+
+    localStorage.removeItem('sc');
+    localStorage.removeItem('user_id');
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const loginForm = document.getElementById("login-form");
+        loginForm.addEventListener("submit", function (e) {
+			    e.preventDefault();
+
+                var totpSubmited = document.getElementById("totp_code").value;
+
+                fetch("http://127.0.0.1:5000/2fa", {
+                    method: "POST",
+                    body: new URLSearchParams({ id, totpSubmited}),
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        
+                        if (data.twofactorauth) {
+                            // Login bem-sucedido
+                            // Armazene o token JWT no localStorage
+                            localStorage.setItem("token", data.token);
+                            localStorage.setItem("user_id", data.user_id);
+                            // Redirecione o usuário com base no tipo
+                            if (data.user_type === "admin") {
+                                    // Usuário é um administrador, redirecione para userdashboard.html
+                                    window.location.href = "admin.html";
+                            } else {
+                                    // Usuário não é um administrador, redirecione para index.html
+                                    window.location.href = "index.html";
+                                }							
+                        } else {
+                            // Login falhou
+                        }	
+
+                            })
+                    .catch((error) => {
+                        console.error("Erro ao fazer login:", error);
+
+                    });
+                });
+    });
+</script>
+
+</body>
+</html>

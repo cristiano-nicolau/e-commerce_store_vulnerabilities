@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     type TEXT CHECK(type IN ('normal', 'admin')) NOT NULL,
+    totp_secret VARCHAR(255) NOT NULL,
     reg_date TIMESTAMP NOT NULL
 );
 

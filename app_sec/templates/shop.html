@@ -391,6 +391,23 @@
 		<script>
 			const logoutButton = document.getElementById("logout-id");
 			logoutButton.addEventListener("click", function() {
+        	fetch('http://127.0.0.1:5000/logout',{
+				method: 'POST',
+				headers: {
+					'Authorization': localStorage.getItem('token')
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+
+						window.location.href = "index.html";
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+
 				localStorage.removeItem('token');
 				localStorage.removeItem('user_id');
 
@@ -400,7 +417,6 @@
 			  .then(data => {
 				const productContainer = document.getElementById('product-list');
 				data.products.forEach(product => {
-					console.log(product.id)
 				  const productItem = document.createElement('div');
 				  productItem.className = 'col-12 col-md-4 col-lg-3 mb-5';
 				  productItem.innerHTML = `

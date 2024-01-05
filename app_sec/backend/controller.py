@@ -1,13 +1,25 @@
+import logging
 import bleach
 import hashlib
 from datetime import date
-from flask import Flask, flash, jsonify, redirect, render_template, request, session, abort
+from flask import Flask, flash, jsonify, redirect, render_template, request, session, abort, render_template
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
+import pyotp
 from sqlalchemy import func, text
 import jwt
 from datetime import datetime, timedelta, date
+import requests
+from flask_mail import Mail, Message
+
+file_handler = logging.FileHandler("app_logs.log")
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+
+logger = logging.getLogger("app_logs.log")
+logger.setLevel(logging.INFO)
+logger.addHandler(file_handler)
 
 def check_password(password):
     hash_object = hashlib.sha256()
@@ -24,13 +36,24 @@ if not check_password(db_password):
     exit()
     
 app = Flask(__name__, template_folder='../templates/')
+mail = Mail(app)
 app.config['SESSION_USE_COOKIES'] = True
-CORS(app, origins='*')  # Use this if your frontend and backend is on different domains
+CORS(app, origins='*') 
 app.config['SECRET_KEY'] = db_password 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db'  # Use your database URI
 db = SQLAlchemy(app)  # Create a single instance of SQLAlchemy
 bcrypt = Bcrypt(app)
 
+invalid_tokens = set()
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'sio.deti.store@gmail.com'
+app.config['MAIL_PASSWORD'] = 'vyts qbud sgza wrmv'
+
+mail = Mail(app)
 
 #********************** PAra app segura **********************
 
@@ -49,13 +72,15 @@ def generate_token(user_id, user_type):
     payload = {
         'user_id': user_id,
         'user_type': user_type,
-        'exp': datetime.utcnow() + timedelta(hours=1)  # Token expira após 1 hora
+        'exp': datetime.utcnow() + timedelta(minutes=10)  # Token expira após 1 hora
     }
     token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
     return token
 
 # Função para verificar um token JWT
 def verify_token(token):
+    if token in invalid_tokens:
+        return False
     try:
         payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
         return payload
@@ -65,11 +90,44 @@ def verify_token(token):
     except jwt.InvalidTokenError:
         # Token inválido
         return False
-################################################### LOAD PAGES ###################################################################
-@app.route('/user_info', methods=['GET'])
-def get_user_info(): #função p saber se user está logado ( testada)
-    token = request.headers.get('Authorization')
     
+
+def invalidate_token(token):
+    # Adiciona o token à lista de tokens inválidos
+    invalid_tokens.add(token)
+   
+################################################### LOAD PAGES ###################################################################
+
+################################## email #########################################
+def send_email(recipient_email, subject, name, message):
+    recipient_email = recipient_email
+    subject = subject
+
+    # Variáveis a serem passadas para o template
+    template_vars = {
+        'name': name,
+        'message': message
+    }
+
+    # Renderizar o template para obter o conteúdo HTML do e-mail
+    html_content = render_template('email_template.html', **template_vars)
+    try:
+        # Enviar o e-mail
+        logger.info(f"Sending e-mail to {recipient_email} with subject {subject}")
+        msg = Message(subject=subject, recipients=[recipient_email], html=html_content, sender=app.config['MAIL_USERNAME'])
+        mail.send(msg)
+        
+    except Exception as e:
+        return str(e)
+
+    return True
+
+###################################################################################
+
+@app.route('/user_info', methods=['GET'])
+def get_user_info(): 
+    token = request.headers.get('Authorization')
+
     if not token:
         user_info = {
             'is_authenticated': False
@@ -88,67 +146,130 @@ def get_user_info(): #função p saber se user está logado ( testada)
         'is_authenticated': True,
         'user_type': payload['user_type']
     }
+
     return jsonify(user_info)
 
-@app.route('/reg_log', methods=['POST']) #função p login ( testada)
+@app.route('/reg_log', methods=['POST'])
 def log():
     email = request.form['email']
     password = request.form['password']
 
-    user = users.query.filter_by(email=email).first()
 
+
+    user = users.query.filter_by(email=email).first()
+    print(user)
     db_date = user.reg_date.date()
     today = date.today()
     if not email or not password:
         flash('Please enter all the fields', 'error')
-        return jsonify({'isauthenticated': False})
+        return jsonify({'isauthenticated': False, 'error': 'Please enter all the fields'})
     elif not user:
         flash('Email not found', 'error')
-        return jsonify({'isauthenticated': False})
+        return jsonify({'isauthenticated': False, 'error': 'Bad credentials '})
     elif not check_password_hash(user.password, password):
         flash('Wrong Password', 'error')
-        return jsonify({'isauthenticated': False})
+        return jsonify({'isauthenticated': False, 'error': 'Bad credentials'})
 
     else:
         if (db_date - today).days > 182:  #passwordaging
             flash('In order to keep using the system, update your password!', 'success')
-        token = generate_token(user.id, user.type)
-        return jsonify({'token': token, 'isauthenticated': True, 'user_type': user.type, 'user_id': user.id})
+        logger.info(f"User {user.id} trying to log in")
+        return jsonify({'isauthenticated': True, 'user_id': user.id, 'totp':user.totp_secret})
         
-
-        
-
-@app.route('/register', methods=[ 'POST']) #função p registo (testada)
-def register():
+@app.route('/2fa', methods = ['POST'])
+def login_2fa():
     
-    name = request.form['name']
-    email = request.form['email']
-    password = request.form['password']
-    confirm_password = request.form['confirm_password']
+    user_id = request.form['id']
+    user_provided_code = request.form['totpSubmited']
+    
+    user = users.query.filter_by(id=user_id).first()
+    totp = pyotp.TOTP(user.totp_secret)
 
-    def password_checker(s):  #verificar criterios da password;
-        size = (len(s)>7)
-        digits = any(i.isdigit() for i in s)
-        caps = any(i.isupper() for i in s)
-        if size & digits & caps:
+    if totp.verify(user_provided_code):
+        twofactorauth = True
+        logger.info(f"User {user_id} logged in successfully")
+    else:
+        twofactorauth = False
+
+    token = generate_token(user.id, user.type)
+    return jsonify({'isauthenticated': True,'token': token,'twofactorauth': twofactorauth, 'user_type': user.type, 'user_id': user.id})
+
+@app.route('/logout', methods=['POST']) #função p logout ( testada) 
+def logout():
+    token = request.headers.get('Authorization')
+    payload = verify_token(token)
+    if not payload:
+        return jsonify({'success': False, 'error': 'Invalid token'}), 401
+    
+    invalidate_token(token)  # Adiciona o token inválido à lista
+    logger.info(f"User {payload['user_id']} logged out successfully")
+    return jsonify({'success': True}), 200
+        
+
+@app.route('/register', methods=['POST']) #função p registo (testada)
+def register():
+    data = request.json
+    
+    name = data.get('name')
+    email = data.get('email')
+    password = data.get('password')
+    location = data.get('location')
+
+    def password_checker(s):
+        # Remove multiple spaces
+        s = ' '.join(s.split())
+
+        # Verify password criteria
+        size = len(s) >= 12 and len(s) <= 127
+
+        if size:
             return True
-        else: return False
+
+        return False
 
     if not name or not email or not password:
         flash('Please enter all the fields', 'error')
-    elif password != confirm_password:
-        flash('Passwords do not match', 'error')
+        return jsonify({'success': False, 'error': 'Please enter all the fields'})
     elif not password_checker(password):
-        flash('Passwords need to have at least 8 elements, 1 digit and 1 capital letter', 'error')
+        flash('Passwords need to have at least 12 elements', 'error')
+        return jsonify({'success': False, 'error': 'Passwords need to have at least 12 elements, 1 digit and 1 capital letter'})
+    elif users.query.filter_by(email=email).first():
+        flash('Email already exists', 'error')
+        return jsonify({'success': False, 'error': 'Email already exists'})
+    elif len(password) > 127:
+        flash('Password too long', 'error')
+        return jsonify({'success': False, 'error': 'Password too long'})
     else:
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        user = users(first_name=name, email=email, password=hashed_password, type='normal', reg_date=date.today()) #passwordaging
+        totp = pyotp.TOTP(pyotp.random_base32())
+        secret_key = totp.secret
+        user = users(first_name=name, email=email, password=hashed_password, type='normal', reg_date=date.today(), totp_secret = secret_key)
         db.session.add(user)
         db.session.commit()
 
+        # Enviar e-mail de boas-vindas, atraves do template ja criado
+        send_email(email, 'Bem-vindo à nossa loja!', name, 'Obrigado por se registar na nossa loja! Esperamos que goste da sua experiência de compra connosco.')
+
         flash('Registration successful', 'success')
 
-    return redirect('http://127.0.0.1:5500/app_sec/templates/reg_log.html')  # Redirecione para a página de login ou qualquer outra página desejada após o registro
+     # Validate reCAPTCHA
+    recaptcha_response = request.form.get('g-recaptcha-response')
+    secret_key = '6LeO8EApAAAAAEuL6cVVl4l9Dsoin_NUeyngcpiD'  # Replace with your secret key
+    recaptcha_data = {
+        'secret': secret_key,
+        'response': recaptcha_response,
+    }
+
+    recaptcha_verification = requests.post('https://www.google.com/recaptcha/api/siteverify', data=recaptcha_data)
+    recaptcha_result = recaptcha_verification.json()
+
+    if not recaptcha_result['success']:
+        flash('Please verify reCAPTCHA', 'error')
+        return jsonify({'success': False, 'error': 'Please verify reCAPTCHA'})
+
+    logger.info(f"User {email} registered successfully")
+
+    return jsonify({'success': True})
 
 @app.route('/user', methods=['POST']) #função p user (nao testada)
 def user():
@@ -194,32 +315,63 @@ def edit_user():
     user.email = email
     db.session.commit()
 
+    send_email(email, 'Alteração de dados', name, 'Os seus dados foram alterados com sucesso!')
+
     return jsonify({'success': True}), 200
 
-@app.route('/changepswd', methods=['POST']) #função p mudar pass (nao testada)
+@app.route('/changepswd', methods=['POST'])
 def changepswd():
     data = request.get_json()
     user_id = data.get('id')
-    password = data.get('password')
+    new_password = data.get('password')
+    old_password = data.get('old_password')
 
+    # Password criteria checker
+    def password_checker(s):
+     
+        s = ' '.join(s.split())
+
+        size = len(s) >= 12 and len(s) <= 127
+
+        if size:
+            return True
+
+        return False
+    
+    # Validate user ID
     if user_id is None or not user_id.isdigit():
-        return jsonify({'error': 'ID de usuário inválido'})
-    
+        return jsonify({'error': 'ID de usuário inválido'}), 400
+
+    # Query the user from the database
     user = users.query.get(int(user_id))
-
     if user is None:
-        return jsonify({'error': 'Usuário não encontrado'})
-    
-    if password is None:
-        return jsonify({'error': 'Por favor, preencha todos os campos'})
+        return jsonify({'error': 'Usuário não encontrado'}), 404
 
+    # Validate password inputs
+    if not new_password or not old_password:
+        return jsonify({'error': 'Por favor, preencha todos os campos'}), 400
 
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    if old_password == new_password:
+        return jsonify({'error': 'A nova senha não pode ser igual à antiga'}), 400
+
+    if not password_checker(new_password):
+        return jsonify({'error': 'A senha precisa ter pelo menos 12 elementos'}), 400
+
+    # Verify old password
+    if not bcrypt.check_password_hash(user.password, old_password):
+        return jsonify({'error': 'A senha antiga não confere'}), 401
+
+    # Update the password
+    hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
     user.password = hashed_password
-    user.reg_date = date.today() #passwordaging
     db.session.commit()
 
+    # Send e-mail notification
+    send_email(user.email, 'Alteração de senha', user.first_name, 'A sua senha foi alterada com sucesso!')
+
     return jsonify({'success': True}), 200
+
+
 
 
 
@@ -330,6 +482,7 @@ def review_product():
 @app.route('/add_product', methods=['POST'])
 def add_product():
     if request.method == 'POST':
+
         data = request.json  # Access JSON data from the request
         name = data.get('name')
         id = data.get('id')
@@ -340,15 +493,25 @@ def add_product():
         category_id = int(category_id)
         description = data.get('description')
 
+        password = data.get('password')
+
+        
+
         # Validate id is type admin
         user = users.query.get(id)
+        if not user:    
+            return jsonify({"success": False, "error": "User not found"})
+
+        if not check_password_hash(user.password, password):
+            return jsonify({"success": False, "error": "Wrong password"})
+
         if user.type != 'admin':
             flash('You are not authorized to add products', 'error')
             return jsonify({"success": False, "error": "You are not authorized to add products"})
 
         if not name or not price or not stock or not description or not category_id or not photo:
             flash('Please enter all the fields', 'error')
-            return jsonify({"success": False})
+            return jsonify({"success": False, "error": "Please enter all the fields"})
         
         if price <= 0 or stock <= 0:
             flash('Price and stock must be greater than 0', 'error')
@@ -362,11 +525,16 @@ def add_product():
 
         flash('Product added successfully')
 
+        logger.info(f"User {user.id} added product {name} successfully")
+
+        send_email(user.email, 'Novo produto adicionado', user.first_name, f"O produto {name} foi adicionado com sucesso à categoria {categories_name}, com o preço {price}€ e com {stock} unidades em stock.")
+
     return jsonify({"success": True, "categories_name": categories_name})
 
 @app.route('/update_product', methods=['POST'])
 def update_product():
     if request.method == 'POST':
+        password = request.json.get('password')
         product_id = request.json.get('id')  # Obtenha o ID do produto da solicitação JSON
         updated_product_name = request.json.get('name')
         updated_product_category = request.json.get('category')
@@ -382,10 +550,12 @@ def update_product():
             flash('You are not authorized to update products', 'error')
             return jsonify({"success": False, "error": "You are not authorized to update products"})
 
-        # Valide os dados conforme necessário
+        if not check_password_hash(user.password, password):
+            return jsonify({"success": False, "error": "Wrong password"})
+   
         if not updated_product_name or not  updated_quantity  or not updated_product_description or not updated_product_price:
             flash('Please enter all the fields', 'error')
-            return jsonify({"success": False})
+            return jsonify({"success": False, "error": "Please enter all the fields"})
 
         # Atualize o produto no banco de dados
         product = products.query.get(product_id)
@@ -398,6 +568,11 @@ def update_product():
             product.price = updated_product_price
 
             db.session.commit()
+
+            send_email(user.email, 'Produto atualizado', user.first_name, f"O produto {updated_product_name} foi atualizado com sucesso, com o preço {updated_product_price}€ e com {updated_quantity} unidades em stock.")
+
+            logger.info(f"User {user.id} updated product {updated_product_name} successfully")
+
             return jsonify({"success": True})
         else:
             return jsonify({"success": False, "message": "Product not found"})
@@ -407,7 +582,12 @@ def update_product():
 def delete_product():
     product_id = request.json.get('p_id')
     id = request.json.get('user_id')
+    password = request.json.get('password')
     user = users.query.get(id)
+    if not user:
+        return jsonify({"success": False, "error": "User not found"})
+    if not check_password_hash(user.password, password):
+        return jsonify({"success": False, "error": "Wrong password"})
     if user.type != 'admin':
         flash('You are not authorized to delete products', 'error')
         return jsonify({"success": False, "error": "You are not authorized to delete products"})
@@ -415,6 +595,11 @@ def delete_product():
     db.session.delete(product)
     db.session.commit()
     flash('Product deleted successfully')
+
+    send_email(user.email, 'Produto eliminado', user.first_name, f"O produto {product.name} foi eliminado com sucesso.")
+
+    logger.info(f"User {user.id} deleted product {product.name} successfully")
+
     return jsonify({"success": True})
 
 
@@ -496,6 +681,8 @@ def review_site():
 
     review = reviews(user_id=user_id, rating=rating, comment=clean_comment)
 
+    logger.info(f"User {user_id} reviewed the site successfully, with rating {rating} and comment {comment}")
+
     db.session.add(review)
     db.session.commit()
 
@@ -535,6 +722,8 @@ def create_order():
 
         # Commit the transaction
         db.session.commit()
+
+        logger.info(f"User {user_id} placed order {new_order.id} successfully")
 
         return jsonify({'message': 'Order placed successfully', 'order_id': new_order.id}), 200
     except Exception as e:
@@ -638,6 +827,7 @@ class users(db.Model):
     password = db.Column(db.String(255), nullable=False)
     type = db.Column(db.String(255), nullable=False)
     reg_date = db.Column(db.DateTime, nullable=False) # isto foi mudado para o passwordaging
+    totp_secret = db.Column(db.String(255), nullable=False)
     
 class orders(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

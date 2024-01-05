@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DETISTore Email Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #3b5d50; /* Verde escuro */
+            padding-top: 50px;
+	        padding-bottom: 20px;
+            border-bottom-right-radius: 500px; /* Curvatura */
+            border-bottom-left-radius: 100px; /* Curvatura */
+            
+            text-align: right;
+            color: white;
+            height: 100px;
+            
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .textbox {
+            border: 2px solid #3b5d50; /* Borda verde */
+            padding: 50px;
+            margin: 100px;
+            border-radius: 10px;
+        }
+
+        .footer {
+            background-color: #3b5d50; /* Verde escuro */
+            color: white;
+            padding: 10px 20px;
+            height: 70px;
+
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+    <div style="float: left;font-size: 32px; font-weight: 600;margin-left: 250px; ">
+        DETI Store
+    </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <h2>Hello, {{ name }}</h2>
+        <div class="textbox">
+            <p>{{ message }}</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div style="float: left;font-size: 22px; font-weight: 200;margin-left: 250px; ">
+            
+        Best Regards,<br>
+        DETI Store
+        </div>
+        <div style="float: right;font-size: 22px; font-weight: 200;margin-right: 250px; ">
+        <a href="https://www.facebook.com/" style="color: white;">Facebook</a> | <a href="https://www.instagram.com/" style="color: white;">Instagram</a> | <a href="https://www.linkedin.com/" style="color: white;">LinkedIn</a>
+        </div>
+        <div style="clear: both; text-align: center;">Universidade de Aveiro - SIO - 2nd Project</div>
+
+    </div>
+
+</body>
+</html>

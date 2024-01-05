@@ -450,18 +450,51 @@
 			}
 			});
 		const id = localStorage.getItem('user_id');
-		console.log(id);
 
 		const logoutButtonAdmin = document.getElementById("logout-id-admin");
 		const logoutButtonUser = document.getElementById("logout-id-user");
 
 		logoutButtonAdmin.addEventListener("click", function () {
+        	fetch('http://127.0.0.1:5000/logout',{
+				method: 'POST',
+				headers: {
+					'Authorization': localStorage.getItem('token')
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+
+						window.location.href = "index.html";
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+
 			localStorage.removeItem('token');
 			localStorage.removeItem('user_id');
 			window.location.href = "index.html";
 		});
 
 		logoutButtonUser.addEventListener("click", function () {
+        	fetch('http://127.0.0.1:5000/logout',{
+				method: 'POST',
+				headers: {
+					'Authorization': localStorage.getItem('token')
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+
+						window.location.href = "index.html";
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+
 			localStorage.removeItem('token');
 			localStorage.removeItem('user_id');
 

@@ -250,6 +250,40 @@
 	<script>
 		const logoutButton = document.getElementById("logout-id");
 		logoutButton.addEventListener("click", function () {
+        	fetch('http://127.0.0.1:5000/logout',{
+				method: 'POST',
+				headers: {
+					'Authorization': localStorage.getItem('token')
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+
+						window.location.href = "index.html";
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+
+			fetch('http://127.0.0.1:5000/logout',{
+				method: 'POST',
+				headers: {
+					'Authorization': localStorage.getItem('token')
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+
+						window.location.href = "index.html";
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+			
 			localStorage.removeItem('token');
 			localStorage.removeItem('user_id');
 
@@ -344,7 +378,6 @@
 			if (event.target.classList.contains('fas', 'fa-trash-alt')) {
 				const productId = event.target.parentElement.dataset.productId;
 				const userId = localStorage.getItem('user_id');
-				console.log(productId);
 				fetch(`http://127.0.0.1:5000/remove_from_cart/${userId}/${productId}`, { method: 'DELETE' })
 					.then(response => response.json())
 					.then(data => {

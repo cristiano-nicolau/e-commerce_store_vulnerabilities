@@ -193,6 +193,23 @@
 		<script>
 			const logoutButtonUser = document.getElementById("logout-id-user");
 		logoutButtonUser.addEventListener("click", function () {
+        	fetch('http://127.0.0.1:5000/logout',{
+				method: 'POST',
+				headers: {
+					'Authorization': localStorage.getItem('token')
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+
+						window.location.href = "index.html";
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+
 			localStorage.removeItem('token');
 			localStorage.removeItem('user_id');
 
@@ -201,11 +218,9 @@
 		function checkToken() {
 			const token = localStorage.getItem('token'); // Verifique o token armazenado no localStorage
 			var Admin = document.getElementById('Admin');
-			var admin = document.getElementById('admin');
 
 			var User = document.getElementById('User');
 			var NotAuthenticated = document.getElementById('NotAuthenticated');
-			console.log(NotAuthenticated)
 			var cartElements = document.getElementsByClassName('cart');
 			if (token) {
 				fetch('http://127.0.0.1:5000/user_info', {
@@ -225,17 +240,14 @@
 									cartElements[i].style.display = 'none';
 								}
 								User.style.display = 'none';
-								admin.style.display = 'block';
 								NotAuthenticated.style.display = 'none';
 							} else {
 								Admin.style.display = 'none';
-								admin.style.display = 'none';
 								User.style.display = 'block';
 								NotAuthenticated.style.display = 'none';
 							}
 						} else {
 							Admin.style.display = 'none';
-							admin.style.display = 'none';
 							User.style.display = 'none';
 							NotAuthenticated.style.display = 'none';
 							// vai para a pagina index.html
@@ -244,6 +256,8 @@
 					})
 					.catch(error => {
 						console.error('Erro ao buscar informações do usuário:', error);
+						Admin.style.display = 'none';
+						NotAuthenticated.style.display = 'none';
 						// window.location.href = "index.html";
 
 					});

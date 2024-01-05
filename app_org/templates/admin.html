@@ -1,0 +1,749 @@
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="../images/favicon.png">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+		<!-- Bootstrap CSS -->
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+		<link href="../css/tiny-slider.css" rel="stylesheet">
+		<link href="../css/style.css" rel="stylesheet">
+		<link href="../css/shop.css" rel="stylesheet">
+		<title>DETI - Departamento de Electrónica, Telecomunicações e Informática </title>
+	</head>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+    
+        body {
+            background: #f2f2f2;
+            font-family: 'Open Sans', sans-serif;
+        }
+    
+        .search {
+            width: 100%;
+            position: relative;
+            display: flex;
+            margin-top: 20px;
+        }
+    
+        .searchTerm {
+            width: 50%;
+            border: 3px solid #ffffff;
+            border-right: none;
+            padding: 10px;
+            height: 36px;
+            border-radius: 5px 0 0 5px;
+            border-color: #000000;
+            outline: none;
+            color: #000000;
+        }
+    
+        .searchTerm:focus {
+            color: #585555;
+        }
+    
+        .searchButton {
+            width: 40px;
+            height: 36px;
+            border: 1px solid #000000;
+            background: #000000;
+            text-align: center;
+            color: #fff;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    
+        .wrap {
+            width: 30%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    
+        .filter-section {
+            margin-right: 20px;
+            display: inline-block;
+        }
+    
+        .filter-section label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            margin-top: 30px;
+            font-size: 20px;
+        }
+    
+        .filter-section input,
+        .filter-section select {
+            width: 150px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    
+        #applyFilters {
+            background-color: #000000;
+            color: #fff;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    
+        .range_container {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+    
+        .sliders_control {
+            position: relative;
+            min-height: 10px;
+        }
+    
+        .sliders_control input {
+            left: 30px;
+        }
+    
+        .form_control {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            color: #ffffff;
+            left: 30px;
+        }
+    
+        .form_control_container input {
+            height: 20.6px;
+            background-color: #f5efef;
+            border-radius: 2px;
+        }
+    
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            pointer-events: all;
+            width: 24px;
+            height: 24px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px #C6C6C6;
+            cursor: pointer;
+        }
+    
+        input[type=range]::-moz-range-thumb {
+            -webkit-appearance: none;
+            pointer-events: all;
+            width: 24px;
+            height: 24px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px #C6C6C6;
+            cursor: pointer;
+        }
+    
+        input[type=range]::-webkit-slider-thumb:hover {
+            background: #f7f7f7;
+        }
+    
+        input[type=range]::-webkit-slider-thumb:active {
+            box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+            -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+        }
+    
+        input[type="number"] {
+            color: #333131;
+            width: 55px;
+            height: 30px;
+            font-size: 20px;
+            border: none;
+        }
+    
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            opacity: 1;
+        }
+    
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 2px;
+            width: 100%;
+            position: absolute;
+            background-color: #C6C6C6;
+            pointer-events: none;
+        }
+    
+        #fromSlider,
+        #fromSlider2 {
+            height: 0;
+            z-index: 1;
+        }
+    
+        /* Additional styles for the inventory management section */
+    
+        h1 {
+            font-size: 24px;
+            margin-top: 30px;
+            margin-left: 30px;
+        }
+    
+        table {
+            width: 80%;
+            margin: 30px auto;
+            border-collapse: collapse;
+        }
+    
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: left;
+        }
+    
+        th {
+            background-color: #000;
+            color: #fff;
+        }
+    
+        #add-product-form {
+            margin: 20px 30px;
+        }
+    
+        #add-product-form input,
+        #add-product-form select,
+        #add-product-form button {
+            margin: 10px;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+    
+        #add-product-form button {
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #add-product-form {
+        width: 80%; /* Increase width for centering */
+        margin: 20px auto; /* Center the form horizontally */
+        text-align: center; /* Center the form elements within */
+        }
+
+        #add-product-form input,
+        #add-product-form select,
+        #add-product-form button {
+            margin: 10px;
+            padding: 5px; /* Reduce padding for smaller fields and buttons */
+            width: 80%; /* Reduce width to make elements smaller */
+            max-width: 300px; /* Set a maximum width to prevent elements from stretching too wide */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px; /* Reduce font size for smaller text */
+        }
+
+        .admin {
+            width: 80%; /* Increase width for centering */
+            margin-top: 50px;
+        }
+
+        .manager {
+            margin-top: 50px;
+        }
+    </style>
+    
+	
+
+	<body>
+
+		<!-- Start Header/Navigation -->
+		<nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+			<div class="container">
+				<a class="navbar-brand" href="admin.html">DETI Store<span>.</span></a>
+
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+		
+				<div class="collapse navbar-collapse" id="navbarsFurni">
+                    <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+
+                    </ul>
+					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+						<li id="Admin" class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<img src="../images/user_copy.svg">
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="userDropdown">
+								<li><a class="dropdown-item" href="userdashboard.html">Account Details</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li id="logout-id"><a class="dropdown-item text-danger" >Logout</a></li>
+							</ul>
+						</li>
+					</ul>				
+				</div>
+			</div>dwad
+		</nav>
+		<!-- End Header/Navigation -->
+
+        <div class="container admin">
+            <div class="container">
+                <!-- Product List -->
+                <h2>Inventory Management</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th>Product Name</th>
+                            <th>Product ID</th>
+                            <th>Quantity</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Available</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-list">
+                        <!-- Product details will be dynamically generated here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Add Product Form -->
+            <div class="container manager">
+                <h2>Add Product</h2>
+                <form id="add-product-form">
+                    <input type="text" id="product-name-add" placeholder="Product Name" required>
+                    <input type="text" id="product-price-add" placeholder="Product Price" required>
+                    <input type="text" id="product-photo-add" placeholder="Product Photo" >
+                    <select id="category">
+                        <option value="">Select a category</option>
+                    </select>                   
+                     <input type="text" id="product-description-add" placeholder="Product Description" required>
+                    <input type="number" id="quantity-add" placeholder="Stock" required>
+                    <button type="submit">Add Product</button>
+                </form>
+            </div>
+        </div>
+        
+		<!-- Start Footer Section -->
+
+		<!-- End Footer Section -->	
+        <script>
+            const logoutButton = document.getElementById("logout-id");
+			logoutButton.addEventListener("click", function() {
+				localStorage.removeItem('token');
+                localStorage.removeItem('user_id');
+
+				window.location.href = "index.html";})
+            fetch('http://127.0.0.1:5000/category') // Faça a solicitação à rota '/categories'
+				.then(response => response.json())
+				.then(data => {
+					const categorySelect = document.getElementById('category');
+					data.category.forEach(category => {
+						const option = document.createElement('option');
+						option.value = category.id;
+						option.text = category.name;
+						categorySelect.appendChild(option);
+					});
+				});
+
+
+            fetch('http://127.0.0.1:5000/product') // Ajuste o URL de acordo com o servidor Flask
+			  .then(response => response.json())
+			  .then(data => {
+				const productContainer = document.getElementById('product-list');
+				data.products.forEach(product => {
+                    if (product.stock > 0 ) {
+                        product.available = 'In Stock';
+                    } else {
+                        product.available = 'Out of Stock';
+                    }
+                    const productItem = document.createElement('tr');
+				  productItem.innerHTML = `
+                  <td>${product.photo}</td>
+                  <td>${product.name}</td>
+                    <td>${product.id}</td>
+                    <td>${product.stock}</td>
+                    <td>${product.category}</td>
+                    <td>${product.price}</td>
+                    <td>${product.description}</td>
+                    <td>${product.available}</td>
+                    <td><button onclick="editProduct(this)">Edit</button><button onclick="deleteProduct(this)">Delete</button></td>		
+					</a>
+				  `;
+				  productContainer.appendChild(productItem);
+				});
+			  });    
+            // Function to add a new product to the list
+            function addProduct() {
+                const productNameAtualizado = document.getElementById('product-name-add').value;
+                const quantityAtualizada = parseInt(document.getElementById('quantity-add').value);
+                const productPhotoAtualizada = document.getElementById('product-photo-add').value;
+                const categoryIdAtualizada = document.getElementById('category').value;
+                const productDescriptionAtualizada = document.getElementById('product-description-add').value;
+                const productPriceAtualizado = document.getElementById('product-price-add').value;
+
+                if (quantityAtualizada > 0) {
+                    availability = 'In Stock';
+                } else {
+                    availability = 'Out of Stock';
+                }
+                
+                if (availability === 'Out of Stock' && quantityAtualizada > 0) {
+                    alert('You cannot add a positive quantity for a product marked as "Out of Stock".');
+                    return;
+                }
+        
+                if (quantityAtualizada < 0) {
+                    alert('Quantity cannot be negative.');
+                    return;
+                }
+                
+                if (quantityAtualizada == 0) {
+                    alert('You cannot add a null quantity for a product marked as "In Stock".');
+                    return;
+                }
+
+                if (productPriceAtualizado < 0) {
+                    alert('Price cannot be negative.');
+                    return;
+                }
+
+                fetch('http://127.0.0.1:5000/add_product', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: productNameAtualizado,
+                        id: localStorage.getItem('user_id'),
+                        price: productPriceAtualizado,
+                        stock: quantityAtualizada,
+                        photo: productPhotoAtualizada,
+                        categories_id: categoryIdAtualizada,
+                        description: productDescriptionAtualizada,
+                    }),
+                })           
+                .then(response => response.json()) 
+                .then(data => {
+                    console.log(data.success);
+                    if (data.success) {
+                        // Produto adicionado com sucesso
+                        if (product.stock > 0 ) {
+                        product.available = 'In Stock';
+                        } else {
+                            product.available = 'Out of Stock';
+                        }
+                    // Create a new row in the product list table
+                            const newRow = document.createElement('tr');
+                            newRow.innerHTML = `
+                                <td>${productPhotoAtualizada}</td>
+                                <td>${productNameAtualizado}</td>
+                                <td></td>
+                                <td>${quantityAtualizada}</td>
+                                <td>${data.categories_name}</td>
+                                <td>${productPriceAtualizado}</td>
+                                <td>${productDescriptionAtualizada}</td>
+                                <td>${product.available}</td>
+                                
+                                <td><button onclick="editProduct(this)">Edit</button><button onclick="deleteProduct(this)">Delete</button></td>
+                            `;
+                
+                        document.getElementById('product-list').appendChild(newRow);
+                
+                    } else {
+                        alert('Failed to add the product. Please fill in all fields.');
+                    }
+                });
+
+                // Clear the form fields after adding a product
+                document.getElementById('product-name-add').value = ''; 
+                document.getElementById('quantity-add').value = '';
+                document.getElementById('product-photo-add').value = '';
+                document.getElementById('category').value = '';
+                document.getElementById('product-description-add').value = '';
+                document.getElementById('product-price-add').value = '';
+            }
+            
+            // Function to check if a product with the given ID already exists in the table
+            function isProductExists(productId) {
+                const productRows = document.querySelectorAll('#product-list tr');
+                for (const row of productRows) {
+                    const idCell = row.querySelector('td:nth-child(2)');
+                    if (idCell && idCell.textContent === productId) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            // Function to edit a product
+    function editProduct(button) {
+    const row = button.parentElement.parentElement;
+    const cells = row.querySelectorAll('td');
+    
+    function getCategorySelectHTML(selectedCategoryId) {
+    return new Promise((resolve, reject) => {
+        const categories = [{ id: '', name: 'Select a category' }];
+
+        fetch('http://127.0.0.1:5000/category')
+            .then(response => response.json())
+            .then(data => {
+                data.category.forEach(category => {
+                    categories.push({ id: category.id, name: category.name });
+                });
+
+                const selectElement = document.createElement('select');
+                // Adicione as opções das categorias
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.id;
+                    option.text = category.name;
+                    selectElement.appendChild(option);
+                });
+
+                // Defina a opção selecionada com base no selectedCategoryId
+                if (selectedCategoryId) {
+                    selectElement.value = selectedCategoryId;
+                }
+
+                resolve(selectElement);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+// Check if the row is already in edit mode
+    if (row.getAttribute('data-editing') === 'true') {
+        // Retrieve the updated values
+        const updatedProductName = cells[1].querySelector('input').value;
+        const updatedProductCategory = cells[4].querySelector('select');
+        let updatedQuantity = parseInt(cells[3].querySelector('input').value, 10);
+        const updatedProductPhoto = cells[0].querySelector('input').value; // No editing for product photo
+        const updatedProductDescription = cells[6].querySelector('input').value;// No editing for product description
+        const updatedProductPrice = cells[5].querySelector('input').value;// No editing for product price
+        // Validate quantity
+        if (updatedQuantity < 0) {
+            updatedQuantity = 0;
+        }
+        //validate price
+        if (updatedProductPrice < 0) {
+            alert('Price cannot be negative.');
+        }
+
+        // validate category
+        if (!updatedProductCategory.value) {
+            alert('Please select a category.');
+            return;
+        }
+        const categoryMap = {
+					'1': 'Clothes',
+					'2': 'Drinkware',
+					'3': 'Computer Accessories',
+					'4': 'Clothing Accessories',
+					'5': 'Decor',
+					'6': 'Tech Accessories',
+					'7': 'Promotional Items',
+			};
+
+        const selectedCategoryId = updatedProductCategory.value;  //erro aqui
+        const selectedCategoryName = categoryMap[selectedCategoryId];
+        // Update the row with the new values
+        cells[1].innerHTML = updatedProductName;
+        cells[4].innerHTML = selectedCategoryName;
+        cells[3].innerHTML = updatedQuantity;
+        cells[0].innerHTML = updatedProductPhoto;
+        cells[6].innerHTML = updatedProductDescription;
+        cells[5].innerHTML = updatedProductPrice;
+
+
+        // Perform an AJAX request to update the product in the database
+        fetch('http://127.0.0.1:5000/update_product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: cells[2].textContent,
+                id_user: localStorage.getItem('user_id'),
+                name: updatedProductName,
+                category: selectedCategoryId,
+                quantity: updatedQuantity,
+                photo: updatedProductPhoto,
+                description: updatedProductDescription,
+                price: updatedProductPrice,
+
+                        }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                
+                // Product updated successfully
+                alert('Product updated successfully');
+                        // Reset the row's editing state
+                row.removeAttribute('data-editing');
+                button.textContent = 'Edit';
+
+            } else {
+                alert('Failed to update the product. Please try again.');
+            }
+        });
+    } else {
+        // Enter edit mode for the row  
+        // Create input fields for the editable cells
+        const nameCell = cells[1];
+        const name = nameCell.textContent;
+        nameCell.innerHTML = `<input type="text" value="${name}">`;
+
+
+        getCategorySelectHTML(cells[4].getAttribute('data-category-id'))
+            .then(categorySelect => {
+                cells[4].innerHTML = '';
+                cells[4].appendChild(categorySelect);
+            });
+
+        const quantityCell = cells[3];
+        const quantity = quantityCell.textContent;
+        quantityCell.innerHTML = `<input type="number" value="${quantity}">`;
+
+        const photoCell = cells[0];
+        const photo = photoCell.textContent;
+        photoCell.innerHTML = `<input type="text" value="${photo}">`;
+
+        const descriptionCell = cells[6];
+        const description = descriptionCell.textContent;
+        descriptionCell.innerHTML = `<input type="text" value="${description}">`;
+
+        const priceCell = cells[5];
+        const price = priceCell.textContent;
+        priceCell.innerHTML = `<input type="text" value="${price}">`;
+
+
+
+
+        // Change the button text to "Save"
+        button.textContent = 'Save';
+
+        row.setAttribute('data-editing', 'true');
+    }
+}
+
+
+        
+            // Function to delete a product
+            function deleteProduct(button) {
+                const row = button.parentElement.parentElement;
+                const cells = row.querySelectorAll('td');
+
+                const id = cells[2].textContent;
+                console.log(id);
+                // abre um modal primeiro a confirmar o delete do produto
+                const confirmDelete = confirm('Are you sure you want to delete this product?');
+                if (confirmDelete === false) {
+                    return;
+                }
+
+                fetch('http://127.0.0.1:5000//delete_product', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                            p_id: id,
+                            id_user: localStorage.getItem('user_id'),
+                            }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        row.remove();
+                        alert('Product deleted successfully');
+                    } else {
+                        alert('Failed to delete the product.');
+                    }
+                });
+                
+            }
+        
+            document.getElementById('add-product-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                addProduct();
+            });
+
+            function checkToken() {
+			const token = localStorage.getItem('token'); // Verifique o token armazenado no localStorage
+			var Admin = document.getElementById('Admin');
+            var User = document.getElementById('User');
+            var NotAuthenticated = document.getElementById('NotAuthenticated');
+			if (token) {
+				fetch('http://127.0.0.1:5000/user_info', {
+					method: 'GET',
+					headers: {
+					'Authorization': token 
+					}
+				})
+				.then(response => response.json())
+				.then(data => {
+				// Verifique se o usuário está autenticado e recupere o tipo de usuário
+				if (data.is_authenticated) {
+					if (data.user_type === 'admin') {
+						Admin.style.display = 'block';
+						User.style.display = 'none';
+						NotAuthenticated.style.display = 'none';
+					} else {
+						Admin.style.display = 'none';
+						User.style.display = 'block';
+						NotAuthenticated.style.display = 'none';
+                        window.location.href = "index.html";
+					}
+				} else {
+					Admin.style.display = 'none';
+					User.style.display = 'none';
+					NotAuthenticated.style.display = 'block';
+                    window.location.href = "index.html";
+				}
+				})
+				.catch(error => {
+				console.error('Erro ao buscar informações do usuário:', error);
+				});
+			} else {
+				Admin.style.display = 'none';
+                User.style.display = 'none';
+                NotAuthenticated.style.display = 'block';
+                window.location.href = "index.html";
+			}
+		}
+		checkToken();
+        </script>
+        
+		<script src="../js/bootstrap.bundle.min.js"></script>
+		<script src="../js/tiny-slider.js"></script>
+		<script src="../js/custom.js"></script>
+	</body>
+
+</html>

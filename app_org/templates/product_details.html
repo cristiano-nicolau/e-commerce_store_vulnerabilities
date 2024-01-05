@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="../images/favicon.png">
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+  <title>Product Details - DETI Store</title>
+</head>
+
+<style>
+    .produto{
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
+
+        /* Estilos para a seção de Avaliações de Produtos */
+    .product-reviews {
+    background-color: #f9f9f9;
+    padding: 40px 0;
+    border-top: 1px solid #ddd;
+    }
+
+    .section-title {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 30px;
+    }
+
+    .form-title,
+    .review-title {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 20px;
+    }
+
+    .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    }
+
+    .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px #007bff;
+    }
+
+    textarea.form-control {
+    resize: none;
+    }
+
+    .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    }
+
+    .btn-primary:hover {
+    background-color: #0056b3;
+    }
+
+    /* Estilos para a lista de avaliações */
+    #review-list {
+    list-style: none;
+    padding: 0;
+    }
+
+    .review-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 15px;
+    }
+
+    .review-item h5 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+    }
+
+    .review-item p {
+    font-size: 16px;
+    color: #777;
+    }
+
+    .review-item .rating {
+    color: #f39c12;
+    font-size: 18px;
+    }
+
+    .star {
+        font-size: 40px; /* Tamanho padrão das estrelas */
+        color: darkgray; /* Cor padrão das estrelas não selecionadas */
+        cursor: pointer;
+    }
+    .star.selected {
+        font-size: 45px; /* Tamanho maior para as estrelas selecionadas */
+        color: #daa520; /* Cor das estrelas selecionadas (amarelo) */
+    }
+    .star.filled {
+        font-size: 20px; /* Tamanho maior para as estrelas selecionadas */
+        color: #daa520; /* Cor das estrelas selecionadas (amarelo) */
+    }
+
+</style>
+<body>
+
+  <nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+			<a class="navbar-brand" href="index.html">DETI Store<span>.</span></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+				aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarsFurni">
+				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+					<li class="nav-item">
+						<a class="nav-link" href="index.html">Home</a>
+					</li>
+					<li><a class="nav-link" href="shop.html">Shop</a></li>
+					<li><a class="nav-link" href="about.html">About us</a></li>
+				</ul>
+
+				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+					<li id="Admin" class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<img src="../images/user_copy.svg">
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="userDropdown">
+							<li><a class="dropdown-item" href="userdashboard.html">Account Details</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li id="logout-id-admin"><a class="dropdown-item text-danger">Logout</a></li>
+						</ul>
+					</li>
+					<li id="User" class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<img src="../images/user_copy.svg">
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="userDropdown">
+							<li><a class="dropdown-item" href="serdashboard.html">Account Details</a></li>
+							<li><a class="dropdown-item" href="orders.html">Orders</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li id="logout-id"><a class="dropdown-item text-danger">Logout</a></li>
+						</ul>
+					</li>
+					<li id="NotAuthenticated"><a class="nav-link" href="reg_log.html"><img src="../images/user.svg"></a>
+					</li>
+					<li id="Cart"><a class="nav-link" href="cart.html"><img src="../images/cart.svg"></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+<!-- End Header/Navigation -->
+
+<!-- Product Details Section -->
+<div class="product-details">
+  <a href="shop.html" class="btn btn-success mt-4 ms-4"><i class="fas fa-arrow-left"></i> Go Back</a>
+  
+  <div class="container" >
+    <div class="row produto">
+      <div class="col-md-6" id="imagem_produto">
+        
+      </div>
+      <div class="col-md-6" id="product-details-container">
+
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+<!-- Avaliações de Produtos -->
+<div class="product-reviews">
+    <div class="container">
+      <h3 class="section-title">Avaliações de Clientes</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <!-- Formulário de Avaliação -->
+          <h4 class="form-title">Deixe sua avaliação</h4>
+          <div id="review-form">
+   
+            <div class="mb-3">
+              <label for="rating">Classificação:</label>
+              <div id="star-rating-reviewed">
+                <span class="star unselected" data-rating="5">&#9733;</span>
+                <span class="star unselected" data-rating="4">&#9733;</span>
+                <span class="star unselected" data-rating="3">&#9733;</span>
+                <span class="star unselected" data-rating="2">&#9733;</span>
+                <span class="star unselected" data-rating="1">&#9733;</span>
+              </div>
+              <input type="hidden" id="rating" name="rating" value="0" required>
+            </div>
+            
+          
+          
+          
+            <div class="mb-3">
+              <label for="review">Comentário:</label>
+              <textarea id="review" name="review" class="form-control" rows="4" required></textarea>
+            </div>
+            <button type="submit" onclick=sendReview() class="btn btn-success">Enviar Avaliação</button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <!-- Lista de Avaliações -->
+          <h4 class="review-title">Avaliações dos Clientes</h4>
+          <ul class="list-unstyled" id="review-list">
+              <!-- Avaliações serão adicionadas aqui com JavaScript -->
+          </ul>
+      </div>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+<!-- Start Footer Section -->
+<footer class="footer-section">
+    <div class="container relative">
+
+
+        <div class="row g-5 mb-5">
+            <div class="col-lg-4">
+                <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">DETI Store<span>.</span></a></div>
+                <p class="mb-4">DETI, or the Department of Electronics, Telecommunications, and Informatics, is a pioneering academic department at our university. Known for its commitment to excellence, DETI offers cutting-edge programs, research opportunities, and a vibrant community where innovation thrives.</p>
+
+                <ul class="list-unstyled custom-social">
+                    <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+                    <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+                    <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+                    <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="row links-wrap">
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="reviews.html">Reviews</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Support</a></li>
+                            <li><a href="#">Knowledge base</a></li>
+                            <li><a href="#">Live chat</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Jobs</a></li>
+                            <li><a href="#">Our team</a></li>
+                            <li><a href="#">Leadership</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+
+                    
+                </div>
+            </div>
+
+        </div>
+
+        <div class="border-top copyright">
+            <div class="row pt-4">
+                <div class="col-lg-6">
+                    <p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a>  <!-- License information: https://untree.co/license/ -->
+    </p>
+                </div>
+
+                <div class="col-lg-6 text-center text-lg-end">
+                    <ul class="list-unstyled d-inline-flex ms-auto">
+                        <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</footer>
+<!-- End Footer Section -->	
+<script>
+  const logoutButton = document.getElementById("logout-id");
+			logoutButton.addEventListener("click", function() {
+				localStorage.removeItem('token');
+        localStorage.removeItem('user_id');
+
+				window.location.href = "index.html";})
+
+    const reviewsContainer = document.getElementById('review-list');
+    function renderStars(rating) {
+    const starCount = 5; // Número total de estrelas
+    const filledStars =rating;
+    const emptyStars = starCount - filledStars;
+    let starsHtml = '';
+
+    for (let i = 0; i < filledStars; i++) {
+        starsHtml += '<span class="star filled">&#9733;</span>';
+    }
+
+    return starsHtml;
+}
+
+const stars = document.querySelectorAll('.star.unselected');
+const ratingInput = document.getElementById('rating');
+
+stars.forEach(star => {
+  star.addEventListener('click', () => {
+    const rating = star.getAttribute('data-rating');
+    ratingInput.value = rating;
+
+    // Remova a classe "selected" de todas as estrelas
+    stars.forEach(s => s.classList.remove('selected'));
+
+    // Adicione a classe "selected" apenas à estrela clicada e todas as estrelas anteriores
+    star.classList.add('selected');
+    let previousStar = star.previousElementSibling;
+    while (previousStar) {
+      previousStar.classList.add('selected');
+      previousStar = previousStar.previousElementSibling;
+    }
+  });
+});
+
+
+   // Função para enviar uma avaliação
+  function sendReview() {
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get('id');
+      const userId = localStorage.getItem('user_id'); // Substitua pelo ID do usuário que está enviando a avaliação
+      const rating = document.getElementById('rating').value;
+      const comment = document.getElementById('review').value;
+
+      if (!productId || !rating || !comment) {
+          alert('Por favor, preencha todos os campos.');
+          return;
+      }
+
+      const reviewData = {
+          product_id: productId,
+          user_id: userId,
+          rating: rating,
+          comment: comment
+      };
+      
+
+      fetch('http://127.0.0.1:5000/product_review', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(reviewData),
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              alert('Avaliação enviada com sucesso!');             
+              window.location.reload();
+              
+          } else {
+              alert('Erro ao enviar a avaliação: ' + data.error);
+          }
+      })
+      .catch(error => {
+          console.error('Erro na solicitação:', error);
+      });
+  }
+
+  // Função para buscar os detalhes de um produto com base no ID
+    function fetchProductDetails(productId) {
+        const userId = localStorage.getItem('user_id');
+        fetch(`http://127.0.0.1:5000/product/${productId}`)
+            .then(response => response.json())
+            .then(data => {
+              const  ImageDetailsContainer= document.getElementById('imagem_produto'); 
+            ImageDetailsContainer.innerHTML = `<img src="${data.photo}" alt="Product Image" class="img-fluid product-image">`
+              const productDetailsContainer = document.getElementById('product-details-container');
+            productDetailsContainer.innerHTML = `
+                    <h2 class="product-title">${data.name}</h2>
+                    <p class="product-description">${data.description}</p>
+                    <p class="product-price">Estoque: ${data.stock} unidades</p>
+                    <p class="product-price">Categoria: ${data.category_name}</p>
+                    <p class="product-price">Preço: ${data.price}€</p>
+                    <span >
+                    <button class="btn btn-secondary mt-4" onclick="addToCart(${userId},${productId})">Add to Cart</button>
+                    </span>                   
+
+                `;
+                const reviewsDetailsContainer = document.getElementById('review-list');
+
+              // Adicionar avaliações
+            if (data.reviews.length > 0) {
+              data.reviews.forEach(review => {
+    const reviewItem = document.createElement('li');
+    reviewItem.innerHTML = `
+      <div class="review-header">
+        <h6><strong>${review.user_name}</strong> publicado em ${new Date(review.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</h6>
+        <span>${renderStars(review.rating)}</span>
+      </div>
+      <div class="user-comment">
+        <h7>${review.comment}</h7>
+      </div>
+    `;
+                    reviewsContainer.appendChild(reviewItem);
+                });
+            } else {
+                reviewsContainer.innerHTML = '<p>Ainda não há avaliações para este produto.</p>';
+            }
+        })
+            .catch(error => {
+                console.error('Erro ao obter detalhes do produto:', error);
+            });
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+
+    if (productId) {
+        fetchProductDetails(productId);
+    }
+
+    function addToCart(user_id, product_id) {  //função p adicionar items ao carrinho
+
+        const data = {
+            user_id: user_id,
+            product_id: product_id
+        };
+
+        fetch(`http://127.0.0.1:5000/product_details/${user_id}/${product_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.status === 200) {
+                // Item was added to the cart successfully
+                console.log('Item added to the cart.');
+            } else if (response.status === 404) {
+                // Product not found
+                console.error('Product not found.');
+            } else if (response.status === 400) {
+                // Product out of stock
+                console.error('Product out of stock.');
+            } else {
+                // Handle other errors here
+                console.error('An error occurred.');
+            }
+        })
+        .catch(error => {
+            console.error('Network error:', error);
+        });
+    }
+
+  		 // Função para verificar se um token existe
+		function checkToken() {
+			const token = localStorage.getItem('token'); // Verifique o token armazenado no localStorage
+			var Admin = document.getElementById('Admin');
+			var Cart = document.getElementById('Cart');
+			var User = document.getElementById('User');
+			var NotAuthenticated = document.getElementById('NotAuthenticated');
+			if (token) {
+				fetch('http://127.0.0.1:5000/user_info', {
+					method: 'GET',
+					headers: {
+						'Authorization': token
+					}
+				})
+					.then(response => response.json())
+					.then(data => {
+
+
+						if (data.is_authenticated) {
+							if (data.user_type === 'admin') {
+								Admin.style.display = 'block';
+								User.style.display = 'none';
+								NotAuthenticated.style.display = 'none';
+								Cart.style.display = 'none';
+							} else {
+								Admin.style.display = 'none';
+								User.style.display = 'block';
+								NotAuthenticated.style.display = 'none';
+							}
+						} else {
+							Admin.style.display = 'none';
+							User.style.display = 'none';
+							NotAuthenticated.style.display = 'block';
+						}
+					})
+					.catch(error => {
+						console.error('Erro ao buscar informações do usuário:', error);
+						Admin.style.display = 'none';
+						User.style.display = 'none';
+						NotAuthenticated.style.display = 'block';
+					});
+			} else {
+				Admin.style.display = 'none';
+				User.style.display = 'none';
+				NotAuthenticated.style.display = 'block';
+			}
+		}
+		checkToken();
+</script>
+</body>
+</html>

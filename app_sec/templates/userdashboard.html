@@ -22,6 +22,8 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 	<link href="../css/tiny-slider.css" rel="stylesheet">
 	<link href="../css/style.css" rel="stylesheet">
+	<!-- Add this line to include the zxcvbn library -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
 	<title>DETI - Departamento de Electrónica, Telecomunicações e Informática </title>
 </head>
 <style>
@@ -40,6 +42,124 @@
 		font-weight: bold;
 		/* Torna o texto em negrito ao passar o mouse */
 	}
+	.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+	.modal-content {
+  position: absolute;
+  width: 400px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.modal-content h1 {
+  font-size: 30px;
+  color: #000;
+
+}
+
+.modal-content p {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.modal-content .close {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #000;
+  transition: color 0.3s ease-in-out;
+}
+
+.modal-content .close:hover {
+  color: #b30707;
+}
+
+.modal-content button {
+	  position: absolute;
+  margin-top: 20px;
+  width: 150px;
+}
+
+#confirm-button{
+	left: 0;
+	margin: 20px;;
+	bottom: 0;
+  background-color: #065f02;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#confirm-button:hover {
+  background-color: #ffffff;
+  color: #065f02;
+  border: 3px solid #065f02;
+}
+
+#cancel-button{
+	bottom: 0;
+	margin: 20px;;
+	right: 0;
+  background-color: #a00303;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+ #cancel-button:hover {
+	  background-color: #ffffff;
+  color: #a00303;
+  border: 3px solid #a00303;
+}
+
+/* Custom styles for the Show Password buttons */
+.login__toggle-button {
+	background-color: #737574;
+	color: #fff;
+	border: none;
+	padding: 2px 8px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 12px;
+	margin-top: 5px;
+}
+
+.login__toggle-button:hover {
+	background-color: #d1d419;
+	color: #000000;
+	border: 2px solid #000000;
+	border-radius: 5px;
+	
+}
+
+#password-strength-meter {
+	width: 100%;
+	height: 10px;
+	border-radius: 5px;
+	margin-top: 10px;
+}
 </style>
 
 <body>
@@ -120,6 +240,14 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="e-profile">
+									<div id="gameOverModal" class="modal">
+										<div class="modal-content">
+											<h1 > Change Password <span onclick="closemodal()" class="close">&times;</span></h1>
+											<p>Do you want replace your password?</p>
+											<button  id="confirm-button"onclick="savePasswordChanges()">Yes</button>
+											<button  id="cancel-button" onclick="closemodal()">No</button>
+										</div>
+									</div>
 									<div class="row">
 										<div class="col-12 col-sm-auto mb-3">
 
@@ -197,23 +325,38 @@
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
-																		<label>New Password</label>
+																		<label>Old Password</label>
 																		<input class="form-control" type="password"
-																			id="new-password-field"
-																			placeholder="Nova Senha">
+																			id="old-password-field"
+																			placeholder="Senha Antiga">
 																	</div>
 																</div>
 															</div>
 															<div class="row">
 																<div class="col">
-																	<div class="form-group">
+																	<div id="form-group" class="form-group">
+																		<label>New Password</label>
+																		<input class="form-control" type="password" name="password"
+																			id="new-password-field"
+																			placeholder="Nova Senha">
+																		<p></p>
+																		<h>Password Strength:</h>
+																		<meter max="4" id="password-strength-meter"></meter>
+																	</div>
+																</div>
+																<button type="button" id="togglePasswordButton" class="login__toggle-button" onmousedown="togglePassword(true)" onmouseup="togglePassword(false)" ontouchstart="togglePassword(true)" ontouchend="togglePassword(false)">Show Password</button>
+															</div>
+															<div class="row">
+																<div class="col">
+																	<div id="form-group1" class="form-group">
 																		<label>Confirm <span
 																				class="d-none d-xl-inline">Password</span></label>
-																		<input class="form-control" type="password"
+																		<input class="form-control" type="password" name="confirm_password"
 																			id="repeat-new-password-field"
 																			placeholder="Repita a Nova Senha">
 																	</div>
 																</div>
+																<button type="button" id="togglePasswordButtonConfirmation" class="login__toggle-button" onmousedown="togglePasswordConfiramation(true)" onmouseup="togglePasswordConfiramation(false)" ontouchstart="togglePasswordConfiramation(true)" ontouchend="togglePassword(false)">Show Password Confirmation</button>
 															</div>
 															<div class="row">
 																<div class="col">
@@ -228,8 +371,7 @@
 																		<button class="btn btn-success mr-2 mt-4"
 																			onclick=cancelPasswordChanges() type="button">Cancelar</button>
 																			<button class="btn btn-secondary mt-4 ml-2"
-																			onclick=savePasswordChanges() type="button">Salvar</button>
-																		
+																			onclick=showModal() type="button">Salvar</button>
 																		</div>
 																</div>
 															</div>
@@ -348,6 +490,67 @@
 	</footer>
 	<!-- End Footer Section -->
 	<script>
+		let togglePassword;
+		let togglePasswordConfiramation;
+
+		document.addEventListener("DOMContentLoaded", function () {
+				const registerform = document.getElementById("form-group");
+				const registerform1 = document.getElementById("form-group1");
+
+				const passwordInput = document.getElementById("new-password-field");
+       		 	const passwordStrengthMeter = document.getElementById("password-strength-meter");
+
+				passwordInput.addEventListener("input", function () {
+					const password = passwordInput.value;
+					const result = zxcvbn(password);
+
+					// Update the meter value and color based on the zxcvbn score
+					passwordStrengthMeter.value = result.score;
+					passwordStrengthMeter.style.background = getColor(result.score);
+				});
+
+				// Define a function to set the meter color based on the zxcvbn score
+				function getColor(score) {
+					switch (score) {
+						case 0:
+							return "#cc0000"; // Very Weak
+						case 1:
+							return "#ff6600"; // Weak
+						case 2:
+							return "#ffcc00"; // Fair
+						case 3:
+							return "#99cc00"; // Strong
+						case 4:
+							return "#00cc00"; // Very Strong
+						default:
+							return "#cccccc"; // Default (gray)
+					}
+				};
+
+			// Define togglePassword within the event listener
+			togglePassword = function (show) {
+					const passwordInput = registerform.querySelector('input[name="password"]');
+					passwordInput.type = show ? "text" : "password";
+				};
+
+
+			togglePasswordConfiramation = function (show) {
+					const passwordInput1 = registerform1.querySelector('input[name="confirm_password"]');
+					passwordInput1.type = show ? "text" : "password";
+				};
+		});
+
+		function showModal() {
+			const modal = document.getElementById("gameOverModal");
+			
+			modal.style.display = "block";
+		}
+
+		function closemodal() {
+			const modal = document.getElementById("gameOverModal");
+			modal.style.display = "none";
+		}
+
 		const user_id = localStorage.getItem('user_id');
 		const requestData = {
 			id: user_id
@@ -409,7 +612,6 @@
 				name: document.getElementById('name-field').value,
 				email: document.getElementById('email-field').value,
 			};
-			console.log(editedData)
 			fetch('http://127.0.0.1:5000/edit_user', {
 				method: 'POST',
 				headers: {
@@ -449,15 +651,24 @@
 			}
 		}
 		function cancelPasswordChanges() {
+			document.getElementById('old-password-field').value = '';
 			document.getElementById('new-password-field').value = '';
 			document.getElementById('repeat-new-password-field').value = '';
+
 
 			toggleChangePasswordMode();
 		}
 
 		function savePasswordChanges() {
+			closemodal();
+			const oldPassword = document.getElementById('old-password-field').value;
 			const newPassword = document.getElementById('new-password-field').value;
 			const repeatNewPassword = document.getElementById('repeat-new-password-field').value;
+
+			if (oldPassword === '' || newPassword === '' || repeatNewPassword === '') {
+				alert('Preencha todos os campos!');
+				return;
+			}
 
 			if (newPassword !== repeatNewPassword) {
 				alert('As senhas não coincidem!');
@@ -466,7 +677,8 @@
 
 			const editedData = {
 				id: user_id,
-				password: newPassword
+				password: newPassword,
+				old_password: oldPassword
 			};
 
 			fetch('http://127.0.0.1:5000/changepswd', {
@@ -494,6 +706,23 @@
 
 		const logoutButton = document.getElementById("logout-id");
 		logoutButton.addEventListener("click", function () {
+        	fetch('http://127.0.0.1:5000/logout',{
+				method: 'POST',
+				headers: {
+					'Authorization': localStorage.getItem('token')
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+
+						window.location.href = "index.html";
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+
 			localStorage.removeItem('token');
 			localStorage.removeItem('user_id');
 
@@ -501,6 +730,23 @@
 		})
 		const logoutButtonUser = document.getElementById("logout-id-user");
 		logoutButtonUser.addEventListener("click", function () {
+        	fetch('http://127.0.0.1:5000/logout',{
+				method: 'POST',
+				headers: {
+					'Authorization': localStorage.getItem('token')
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+
+						window.location.href = "index.html";
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+
 			localStorage.removeItem('token');
 			localStorage.removeItem('user_id');
 
@@ -513,7 +759,6 @@
 
 			var User = document.getElementById('User');
 			var NotAuthenticated = document.getElementById('NotAuthenticated');
-			console.log(NotAuthenticated)
 			var cartElements = document.getElementsByClassName('cart');
 			if (token) {
 				fetch('http://127.0.0.1:5000/user_info', {

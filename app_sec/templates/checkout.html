@@ -331,6 +331,23 @@
 		<script>
 			const logoutButton = document.getElementById("logout-id");
 			logoutButton.addEventListener("click", function() {
+        	fetch('http://127.0.0.1:5000/logout',{
+				method: 'POST',
+				headers: {
+					'Authorization': localStorage.getItem('token')
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+
+						window.location.href = "index.html";
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+
 				localStorage.removeItem('token');
 				localStorage.removeItem('user_id');
 
@@ -697,7 +714,6 @@
 						})
 						.then(response => response.json())
 						.then(order => {
-							console.log('Order placed successfully:', order);
 							// Redirect to the "thankyou.html" page after successful order placement
 							window.location.href = 'thankyou.html';
 						})

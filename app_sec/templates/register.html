@@ -7,269 +7,471 @@
 */ -->
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="author" content="Untree.co">
-  <link rel="shortcut icon" href="../images/favicon.png">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Untree.co">
+	<link rel="shortcut icon" href="../images/favicon.png">
+	<!-- <script src="https://www.google.com/recaptcha/enterprise.js?render=6Lf65UApAAAAAC7kyb9Aocgw8aH1K6LLmeWMhNvG"></script> -->
 
-  <meta name="description" content="" />
-  <meta name="keywords" content="bootstrap, bootstrap4" />
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<meta name="description" content="" />
+	<meta name="keywords" content="bootstrap, bootstrap4" />
 
-		<!-- Bootstrap CSS -->
-		<link href="../css/bootstrap.min.css" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-		<link href="../css/tiny-slider.css" rel="stylesheet">
-		<link href="../css/style.css" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
-		<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
-	</head>
+	<!-- Bootstrap CSS -->
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+	<link href="../css/tiny-slider.css" rel="stylesheet">
+	<link href="../css/style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+	<!-- Add this line to include the zxcvbn library -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+	<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+</head>
 
-	<style>
-		@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+<style>
+	@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 
-		* {
-			box-sizing: border-box;
-			margin: 0;
-			padding: 0;	
-			font-family: Raleway, sans-serif;
-		}
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+		font-family: Raleway, sans-serif;
+	}
 
-		body {
-			background: linear-gradient(90deg, #c5f4d9, #3b5d50);		
-		}
+	body {
+		background: linear-gradient(90deg, #c5f4d9, #3b5d50);
+	}
 
-		.container {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			min-height: 100vh;
-		}
+	.container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh;
+	}
 
-		.screen {		
-			background: linear-gradient(90deg, #3b6756, #76a694);		
-			position: relative;	
-			height: 700px;
-			width: 360px;	
-			box-shadow: 0px 0px 24px #569659;
-		}
+	.screen {
+		background: linear-gradient(90deg, #3b6756, #76a694);
+		position: relative;
+		height: 950px;
+		width: 360px;
+		box-shadow: 0px 0px 24px #569659;
+	}
 
-		.screen__content {
-			z-index: 1;
-			position: relative;	
-			height: 100%;
-		}
+	.screen__content {
+		z-index: 1;
+		position: relative;
+		height: 100%;
+	}
 
-		.screen__background {		
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			z-index: 0;
-			-webkit-clip-path: inset(0 0 0 0);
-			clip-path: inset(0 0 0 0);	
-		}
+	.screen__background {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 0;
+		-webkit-clip-path: inset(0 0 0 0);
+		clip-path: inset(0 0 0 0);
+	}
 
-		.screen__background__shape {
-			transform: rotate(45deg);
-			position: absolute;
-		}
+	.screen__background__shape {
+		transform: rotate(45deg);
+		position: absolute;
+	}
 
-		.screen__background__shape1 {
-			height: 520px;
-			width: 520px;
-			background: #FFF;	
-			top: -50px;
-			right: 120px;	
-			border-radius: 0 72px 0 0;
-		}
+	.screen__background__shape1 {
+		height: 520px;
+		width: 520px;
+		background: #FFF;
+		top: -50px;
+		right: 120px;
+		border-radius: 0 72px 0 0;
+	}
 
-		.screen__background__shape2 {
-			height: 220px;
-			width: 220px;
-			background: #4c7c6a;	
-			top: -172px;
-			right: 0;	
-			border-radius: 32px;
-		}
+	.screen__background__shape2 {
+		height: 220px;
+		width: 220px;
+		background: #4c7c6a;
+		top: -172px;
+		right: 0;
+		border-radius: 32px;
+	}
 
-		.screen__background__shape3 {
-			height: 540px;
-			width: 190px;
-			background: linear-gradient(270deg, #4c7c6a	, #76a694);
-			top: -24px;
-			right: 0;	
-			border-radius: 32px;
-		}
+	.screen__background__shape3 {
+		height: 540px;
+		width: 190px;
+		background: linear-gradient(270deg, #4c7c6a, #76a694);
+		top: -24px;
+		right: 0;
+		border-radius: 32px;
+	}
 
-		.screen__background__shape4 {
-			height: 400px;
-			width: 200px;
-			background: #4c7c6a;	
-			top: 420px;
-			right: 50px;	
-			border-radius: 60px;
-		}
+	.screen__background__shape4 {
+		height: 400px;
+		width: 200px;
+		background: #4c7c6a;
+		top: 420px;
+		right: 50px;
+		border-radius: 60px;
+	}
 
-		.login {
-			width: 320px;
-			padding: 30px;
-			padding-top: 56px;
-		}
+	.login {
+		width: 320px;
+		padding: 30px;
+		padding-top: 56px;
+	}
 
-		.login__field {
-			padding: 20px 0px;	
-			position: relative;	
-		}
+	.login__field {
+		padding: 20px 0px;
+		position: relative;
+	}
 
-		.login__icon {
-			position: absolute;
-			top: 30px;
-			color: #4c7c6a;
-		}
+	.login__icon {
+		position: absolute;
+		top: 30px;
+		color: #4c7c6a;
+	}
 
-		.login__input {
-			border: none;
-			border-bottom: 2px solid #D1D1D4;
-			background: none;
-			padding: 10px;
-			padding-left: 24px;
-			font-weight: 700;
-			width: 75%;
-			transition: .2s;
-		}
+	.login__input {
+		border: none;
+		border-bottom: 2px solid #D1D1D4;
+		background: none;
+		padding: 10px;
+		padding-left: 24px;
+		font-weight: 700;
+		width: 75%;
+		transition: .2s;
+	}
 
-		.login__input:active,
-		.login__input:focus,
-		.login__input:hover {
-			outline: none;
-			border-bottom-color: #4c7c6a;
-		}
+	.login__input:active,
+	.login__input:focus,
+	.login__input:hover {
+		outline: none;
+		border-bottom-color: #4c7c6a;
+	}
 
-		.login__submit,
-		.register__submit {
-			background: #fff;
-			font-size: 14px;
-			margin-top: 20px;
-			padding: 16px 20px;
-			border-radius: 26px;
-			border: 1px solid #D4D3E8;
-			text-transform: uppercase;
-			font-weight: 700;
-			display: flex;
-			align-items: center;
-			width: 65%;
-			color: #4c7c6a;
-			box-shadow: 0px 2px 2px #4c7c6a;
-			cursor: pointer;
-			transition: .2s;
-		}
+	.login__submit,
+	.register__submit {
+		background: #fff;
+		font-size: 14px;
+		margin-top: 20px;
+		padding: 16px 20px;
+		border-radius: 26px;
+		border: 1px solid #D4D3E8;
+		text-transform: uppercase;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		width: 65%;
+		color: #4c7c6a;
+		box-shadow: 0px 2px 2px #4c7c6a;
+		cursor: pointer;
+		transition: .2s;
+	}
 
-		.login__submit:active,
-		.login__submit:focus,
-		.login__submit:hover {
-			border-color: #4c7c6a;
-			outline: none;
-		}
+	.login__submit:active,
+	.login__submit:focus,
+	.login__submit:hover {
+		border-color: #4c7c6a;
+		outline: none;
+	}
 
-		.register__submit:active,
-		.register__submit:focus,
-		.register__submit:hover {
-			border-color: #4c7c6a;
-			outline: none;
-		}
+	.register__submit:active,
+	.register__submit:focus,
+	.register__submit:hover {
+		border-color: #4c7c6a;
+		outline: none;
+	}
 
-		.back_website {
-			background: #ffffff;
-			font-size: 14px;
-			margin-top: 10px;
-			padding: 16px 20px;
-			border-radius: 26px;
-			border: 1px solid #e8d3d3;
-			text-transform: uppercase;
-			font-weight: 700;
-			display: flex;
-			align-items: center;
-			width: 40%;
-			color: #000000;
-			box-shadow: 0px 2px 2px #000000;
-			cursor: pointer;
-			transition: .2s;
-		}
+	.back_website {
+		background: #ffffff;
+		font-size: 14px;
+		margin-top: 10px;
+		padding: 16px 20px;
+		border-radius: 26px;
+		border: 1px solid #e8d3d3;
+		text-transform: uppercase;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		width: 40%;
+		color: #000000;
+		box-shadow: 0px 2px 2px #000000;
+		cursor: pointer;
+		transition: .2s;
+	}
 
-		.back_website:active,
-		.back_website:focus,
-		.back_website:hover {
-			border-color: #000000;
-			outline: none;
-		}
+	.back_website:active,
+	.back_website:focus,
+	.back_website:hover {
+		border-color: #000000;
+		outline: none;
+	}
 
-		.button__icon {
-			font-size: 24px;
-			margin-left: auto;
-			color: #4c7c6a;
-		}
+	.button__icon {
+		font-size: 24px;
+		margin-left: auto;
+		color: #4c7c6a;
+	}
 
-		.button__icon2 {
-			font-size: 24px;
-			margin-left: auto;
-			color: #000000;
-		}
+	.button__icon2 {
+		font-size: 24px;
+		margin-left: auto;
+		color: #000000;
+	}
 
-	</style>
+	#password-strength-meter {
+		width: 100%;
+		height: 10px;
+		border-radius: 5px;
+		margin-top: 10px;
+	}
 
-	<body>
-		<div class="container">
-            <div class="screen">
-                <div class="screen__content">
-                    <form class="login" method="POST" action="http://127.0.0.1:5000/register">
-                        <div class="login__field">
-                            <i class="login__icon fas fa-user"></i>
-                            <input type="text" name="name" class="login__input" placeholder="Full Name">
-                        </div>
-                        <div class="login__field">
-                            <i class="login__icon fas fa-envelope"></i>
-                            <input type="email" name="email" class="login__input" placeholder="Email">
-                        </div>
-                        <div class="login__field">
-                            <i class="login__icon fas fa-lock"></i>
-                            <input type="password" name="password" class="login__input" placeholder="Password">
-                        </div>
-						<div class="login__field">
-							<i class="login__icon fas fa-lock"></i>
-							<input type="password" name="confirm_password" class="login__input" placeholder="Confirm Password">
-						</div>
-                        <button class="button register__submit" type="submit">
-                            <a style="text-decoration: none;">
-                                <span class="button__text">Register Now</span>
-                                <i class="button__icon fas fa-chevron-right"></i>
-                            </a>
-                        </button>
-                        <button class="button register__submit">
-							<a style="text-decoration: none;" href="reg_log.html">
-								<span class="button__text">Login Page</span>
-								<i class="button__icon fas fa-chevron-right"></i>
-							</a>
-						</button>
-                        <button class="button back_website">
-                            <a style="text-decoration: none;" href="index.html">
-                                <span class="button__text">Back</span>
-                                <i class="button__icon2 fas fa-chevron-right"></i>
-                            </a>
-                        </button>             
-                    </form>
-                </div>
-                <div class="screen__background">
-                    <span class="screen__background__shape screen__background__shape4"></span>
-                    <span class="screen__background__shape screen__background__shape3"></span>      
-                    <span class="screen__background__shape screen__background__shape2"></span>
-                    <span class="screen__background__shape screen__background__shape1"></span>
-                </div>     
-            </div>
-        </div>
-	</body>
+	/* Custom styles for the Show Password buttons */
+	.login__toggle-button {
+		background-color: #737574;
+		color: #fff;
+		border: none;
+		padding: 2px 8px;
+		border-radius: 4px;
+		cursor: pointer;
+		font-size: 12px;
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+
+	.login__toggle-button:hover {
+		background-color: #d1d419;
+		color: #000000;
+		border: 2px solid #000000;
+		border-radius: 5px;
+	}
+
+	.feedback__message {
+		position: absolute;
+
+		top: 0;
+		margin-top: 10px;
+		width: 80%;
+		text-align: center;
+		padding: 10px;
+		font-weight: bold;
+	}
+
+	.success-message {
+		background-color: #4CAF50;
+		color: #ffffff;
+	}
+
+	.error-message {
+		background-color: #f44336;
+		color: #ffffff;
+	}
+</style>
+
+<body>
+	<div class="container">
+		<div class="screen">
+			<div class="screen__content">
+				<div class="feedback__message success-message" id="login-success" style="display: none;">Registeration
+					Successful</div>
+				<div class="feedback__message error-message" id="login-failure" style="display: none;">Registeration
+					Failed</div>
+
+				<form class="login" id="register-form" method="POST">
+					<div class="login__field">
+						<i class="login__icon fas fa-user"></i>
+						<input type="text" name="name" class="login__input" placeholder="Full Name">
+					</div>
+					<div class="login__field">
+						<i class="login__icon fas fa-envelope"></i>
+						<input type="email" name="email" class="login__input" placeholder="Email">
+					</div>
+					<div class="login__field">
+						<i class="login__icon fas fa-lock"></i>
+						<input type="password" name="password" class="login__input" placeholder="Password"
+							id="passwordInput">
+						<p></p>
+						<h>Password Strength:</h>
+						<meter max="4" id="password-strength-meter"></meter>
+					</div>
+
+					<button type="button" id="togglePasswordButton" class="login__toggle-button"
+						onmousedown="togglePassword(true)" onmouseup="togglePassword(false)"
+						ontouchstart="togglePassword(true)" ontouchend="togglePassword(false)">Show Password</button>
+
+					<div class="login__field">
+						<i class="login__icon fas fa-lock"></i>
+						<input type="password" name="confirm_password" class="login__input"
+							placeholder="Confirm Password">
+					</div>
+
+					<button type="button" id="togglePasswordButtonConfirmation" class="login__toggle-button"
+						onmousedown="togglePasswordConfiramation(true)" onmouseup="togglePasswordConfiramation(false)"
+						ontouchstart="togglePasswordConfiramation(true)" ontouchend="togglePassword(false)">Show
+						Password Confirmation</button>
+					
+					<div class="g-recaptcha" data-sitekey="6LeO8EApAAAAALs9BZLVOYP5f8z6YkEeeImArfZr"></div>
+					<button class="button register__submit" id="register-button">
+						<a style="text-decoration: none;">
+							<span class="button__text">Register Now</span>
+							<i class="button__icon fas fa-chevron-right"></i>
+						</a>
+					</button>
+					<button class="button register__submit">
+						<a style="text-decoration: none;" href="reg_log.html">
+							<span class="button__text">Login Page</span>
+							<i class="button__icon fas fa-chevron-right"></i>
+						</a>
+					</button>
+					<button class="button back_website">
+						<a style="text-decoration: none;" href="index.html">
+							<span class="button__text">Back</span>
+							<i class="button__icon2 fas fa-chevron-right"></i>
+						</a>
+					</button>
+				</form>
+				
+			</div>
+			<div class="screen__background">
+				<span class="screen__background__shape screen__background__shape4"></span>
+				<span class="screen__background__shape screen__background__shape3"></span>
+				<span class="screen__background__shape screen__background__shape2"></span>
+				<span class="screen__background__shape screen__background__shape1"></span>
+			</div>
+		</div>
+	</div>
+	<script>
+		let togglePassword;
+		let togglePasswordConfiramation;
+
+		document.addEventListener("DOMContentLoaded", function () {
+			const loginSuccessMessage = document.getElementById("login-success");
+			const loginFailureMessage = document.getElementById("login-failure");
+			const registerform = document.getElementById("register-form");
+			const registerButton = document.getElementById("register-button");
+
+			registerform.addEventListener("submit", function (e) {
+				e.preventDefault();
+
+				loginSuccessMessage.style.display = "none";
+					loginFailureMessage.style.display = "none";
+				// vai buscar todos os dados
+
+				const name = document.querySelector('input[name="name"]').value;
+				const email = document.querySelector('input[name="email"]').value;
+				const password = document.querySelector('input[name="password"]').value;
+				const confirm_password = document.querySelector('input[name="confirm_password"]').value;
+
+				// verificar a localização geografica, cidade do utilizador atraves de uma api
+				let location = "";
+				fetch("https://geolocation-db.com/json/0f761a30-fe14-11e9-b59f-e53803842572")
+					.then((response) => response.json())
+					.then((data) => {
+						location = data.city;
+					});
+
+				if (password != confirm_password) {
+					alert("Passwords do not match");
+					document.querySelector('input[name="password"]').value = "";
+					document.querySelector('input[name="confirm_password"]').value = "";
+					return;
+				}
+
+				const userData = {
+					'email': email,
+					'password': password,
+					'name': name,
+					'location': location
+				};
+
+				fetch('http://127.0.0.1:5000/register', {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(userData),
+
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						if (data.sucess) {
+							loginSuccessMessage.style.display = "block";
+
+							alert("User registered sucessfully");
+							window.location.href = "reg_log.html";
+						} else {
+							alert(data.error);
+							//loginFailureMessage.style.display = "block";
+							document.querySelector('input[name="password"]').value = "";
+							document.querySelector('input[name="confirm_password"]').value = "";
+							document.querySelector('input[name="email"]').value = "";
+							document.querySelector('input[name="name"]').value = "";
+						}
+					});
+
+
+			}
+			);
+
+		});
+
+		document.addEventListener("DOMContentLoaded", function () {
+			const registerform = document.getElementById("register-form");
+
+			const passwordInput = document.getElementById("passwordInput");
+			const passwordStrengthMeter = document.getElementById("password-strength-meter");
+
+			passwordInput.addEventListener("input", function () {
+				const password = passwordInput.value;
+				const result = zxcvbn(password);
+
+				// Update the meter value and color based on the zxcvbn score
+				passwordStrengthMeter.value = result.score;
+				passwordStrengthMeter.style.background = getColor(result.score);
+			});
+
+			// Define a function to set the meter color based on the zxcvbn score
+			function getColor(score) {
+				switch (score) {
+					case 0:
+						return "#cc0000"; // Very Weak
+					case 1:
+						return "#ff6600"; // Weak
+					case 2:
+						return "#ffcc00"; // Fair
+					case 3:
+						return "#99cc00"; // Strong
+					case 4:
+						return "#00cc00"; // Very Strong
+					default:
+						return "#cccccc"; // Default (gray)
+				}
+			};
+
+
+			// Define togglePassword within the event listener
+			togglePassword = function (show) {
+				const passwordInput = registerform.querySelector('input[name="password"]');
+				passwordInput.type = show ? "text" : "password";
+			};
+
+
+			togglePasswordConfiramation = function (show) {
+				const passwordInput = registerform.querySelector('input[name="confirm_password"]');
+				passwordInput.type = show ? "text" : "password";
+			};
+		});
+
+		// function onClick(e) {
+		// 	e.preventDefault();
+		// 	grecaptcha.enterprise.ready(async () => {
+		// 	const token = await grecaptcha.enterprise.execute('6Lf65UApAAAAAC7kyb9Aocgw8aH1K6LLmeWMhNvG', {action: 'LOGIN'});
+		// 	});
+		// }
+	</script>
+</body>
 
 </html>
-
-
