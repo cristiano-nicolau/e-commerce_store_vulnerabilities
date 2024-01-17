@@ -190,6 +190,6 @@ List of ASVS items that we use have in our project:
             email: joaopaulo@detistore.com
             password: 123456789pass
             ```
-- ** Grades **
-      - 1st project: ** 17.1 **
-      - 2nd project: ** 18.7 **
+- **Grades**
+      * 1st project: **17.1**
+      * 2nd project: **18.7**
