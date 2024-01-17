@@ -191,5 +191,5 @@ List of ASVS items that we use have in our project:
             password: 123456789pass
             ```
 - **Grades**
-      * 1st project: **17.1**
-      * 2nd project: **18.7**
+   - 1st project: **17.1**
+   - 2nd project: **18.7**
